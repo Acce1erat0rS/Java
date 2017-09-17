@@ -7,9 +7,9 @@ public class demo {
 		long[] arr= new long[demo.numRow];
 		for(int i=0; i<demo.numRow;i++)
 			arr[i] = ~0L;
-		Command[] cmd = new Command[10];
+		Parse[] cmd = new Parse[10];
 		for(int commandID = 0;commandID < args.length-2;commandID++){
-			cmd[commandID] = new Command(args[commandID+2]);
+			cmd[commandID] = new Parse(args[commandID+2]);
 			int prev = cmd[commandID].I;
 			if(cmd[commandID].F == 0){
 				for(int i=0;i<demo.numRow;i++){
@@ -27,7 +27,7 @@ public class demo {
 		System.out.println(determine(arr));
 	}
 
-	public static int next(int prev, Command cmd){
+	public static int next(int prev, Parse cmd){
 		return (int)(cmd.C*Math.pow(prev,cmd.P)+cmd.S)%demo.numCol;
 	}
 	public static long turn(long bit, int n){
@@ -54,9 +54,9 @@ public class demo {
 	}
 }
 
-class Command{
+class Parse {
 	int F,I,C,P,S;
-	public Command(String in){
+	public Parse(String in){
 		this.F = cut(in,'F');
 		this.I = cut(in,'I');
 		this.C = cut(in,'C');
