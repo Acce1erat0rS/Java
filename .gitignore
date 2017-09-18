@@ -1,3 +1,8 @@
 *.class
 *.swp
+*.iml
+*.swo
+/out
+*.xml
+.gitignore
 
