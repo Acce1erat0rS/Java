@@ -1,3 +1,5 @@
+*.swo
 *.class
 *.swp
-
+*.xml
+*.iml
