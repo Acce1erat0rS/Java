@@ -1,3 +1,4 @@
+*.swo
 *.class
 *.swp
 *.iml
@@ -5,4 +6,3 @@
 /out
 *.xml
 .gitignore
-
