@@ -14,7 +14,11 @@ public class Minimum {
 		for(int i = 0; i < Minimum.numRow; i++)
 			for(int j = 0; j < args.length - 2; j++){
 				bitStatus = bitStatus^(1<<cmd[j].previous);
-				int T = (int)(cmd[j].C * Math.pow(cmd[j].previous,cmd[j].P)+cmd[j].S); 
+				int base = cmd[j].previous;
+				for(int count=0;count<cmd[j].P;count++)
+					base *= cmd[j].P;
+				int T = cmd[j].C*base+cmd[j].S;
+				//int T = (int)(cmd[j].C * Math.pow(cmd[j].previous,cmd[j].P)+cmd[j].S); 
 				cmd[j].previous =T %  Minimum.numCol;
 			}
 		int count = 0;
