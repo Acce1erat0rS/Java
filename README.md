@@ -17,3 +17,7 @@ fastLight
 Actually there is a better way to solve the first problem.
 
 As each turn will change the parity of each column, we simply needs a LongInt to track the parity of each column. Where the F dosen't matter as well.
+
+Extends
+---
+This is interesting. When extending an class, when constructing an father pointer, and points it to its inheritance, it calls the variable of father and method of son.
