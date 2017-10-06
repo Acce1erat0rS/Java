@@ -11,6 +11,9 @@ public class Exp2{
 			c[2] = Complex.parseComplex("3+30i");
 			Polynomial p = new Polynomial('x',c);
 			System.out.println(p);
+			System.out.println("------");
+			p = Polynomial.parsePolynomial("(1+2i)x^0 + (3+4i)x^1 + (5+6i)x^2");
+			System.out.println(p);
 	}
 }
 
@@ -56,7 +59,8 @@ class Complex implements Cloneable{
 
 // 显示本对象信息：
 	public void display(){
-		//TODO: Add your code here.
+		//Add your code here.
+		System.out.println(this);
 	}
 
 // 克隆本对象：
@@ -86,8 +90,12 @@ class Complex implements Cloneable{
 
 // 复数求相反数：
 	public Complex negative(){
-		// TODO :Add your code here.
-		return null;
+		// Add your code here.
+		real = - this.real;
+		imag = - this.imag;
+		Complex m_buff = new Complex(real, imag);
+		return m_buff;
+
 	}
 
 // 复数相减：
@@ -141,17 +149,41 @@ class Polynomial implements Cloneable{
 
 // 把形如(2-3i)x^0 + (-1+2i)x^1 的形式的字符串转换成多项式：
 	public static Polynomial parsePolynomial(String strPolynomial){
-		// Add your code here.		
-		int max = 0;
-		String regex = mark + "\\d+";
+		// Add your code here.
+		//先找到variable
+		String regex = "\\p{Alpha}\\^";
 		Pattern  p = Pattern.compile(regex);
-		Matcher m = p.matcher(content);
+		Matcher m = p.matcher(strPolynomial);
 		m.find();
-		int start = m.start()+1;
-		int end = m.end();
-		String strValue = content.substring(start,end);
-		int value = Integer.parseInt(strValue);	
-		Polynomial p = new Polynomial();
+		char variable = strPolynomial.charAt(m.start());
+		//判断变量的最高次幂
+		int max = 0;
+		regex = "\\^\\d+";
+		p = Pattern.compile(regex);
+		m = p.matcher(strPolynomial);
+		while(m.find()){
+			int start = m.start()+1;
+			int end = m.end();
+			String strValue = strPolynomial.substring(start,end);
+			int value = Integer.parseInt(strValue);
+			if(value>max)
+				max = value;
+		}
+		//parse
+		Complex coeff[] = new Complex[max+1];
+		regex = "\\(\\d\\p{Punct}?\\di\\)x\\^\\d+";
+		p = Pattern.compile(regex);
+		m = p.matcher(strPolynomial);
+		while(m.find()) {
+			int start = m.start()+1;
+			int end = m.end();
+			String strValue = strPolynomial.substring(start,end);
+			String a[] = strValue.split("x\\^");
+			int pow = Integer.parseInt(a[1]);
+			coeff[pow] = Complex.parseComplex(a[0]);
+		}
+		Polynomial result = new Polynomial(variable,coeff);
+		return result;
 	}
 
 // 显示多项式：
@@ -159,29 +191,40 @@ class Polynomial implements Cloneable{
 		// Add your code here.
 		System.out.println(this.toString());
 	}
-/*
+
 // 多项式深克隆：
 	public Polynomial clone(){
 		// Add your code here.
+
+		Complex n_coeff[] = new Complex[this.coeff.length];
+		for(int i=0;i<this.coeff.length;i++)
+			n_coeff[i] = coeff[i].clone();
+		Polynomial poly = new Polynomial(this.variable,n_coeff);
+		return poly;
+
 	}
 
 // 多项式浅克隆：
 	public Polynomial shallowCopy(){
 		// Add your code here.
+		Polynomial poly = new Polynomial(this.variable,this.coeff);
+		return poly;
 	}
 
 // 多项式设置某个参数：
 	public void setCoeff(int pos, Complex val){
 		// Add your code here.
+		this.coeff[pos] = val.clone();
 	}
-
+/*
 // 多项式整理，把高次幂去掉。
 // 例如 (1+2i)x^0 + (0+0i)x^1 + (3.3-7i)x^2 + (0+0i)x^3
 // 整理为：(1+2i)x^0 + (0+0i)x^1 + (3.3-7i)x^2
 	public Polynomial trim(){
 		// Add your code here.
+		for()
 	}
-
+/*
 // 多项式求相反数
 	public Polynomial negative(){
 		// Add your code here.
