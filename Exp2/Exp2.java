@@ -1,20 +1,55 @@
-import java.util.*;
 import java.util.Scanner;
 import java.util.regex.*;
 
 // 原型模式类，负责输入、调用和输出：
 public class Exp2{
 	public static void main(String[] args){
-			Complex c[] = new Complex[3];
-			c[0] = Complex.parseComplex("1+1i");
-			c[1] = Complex.parseComplex("2-2i");
-			c[2] = Complex.parseComplex("3+30i");
-			Polynomial p = new Polynomial('x',c);
-			System.out.println(p);
-			System.out.println("------");
-			p = Polynomial.parsePolynomial("(1+2i)x^0 + (3+4i)x^1 + (5+6i)x^2");
-			Polynomial p2 = Polynomial.parsePolynomial("(1+2i)x^0 + (3+4i)x^1 + (5+5i)x^2");
-			System.out.println(p.negative().add(p2));
+		Scanner scanner = new Scanner(System.in);
+		while(true){
+			System.out.println("请输入两个复系数多项式的加法、减法和乘法。输入finish结束：");
+			String line = scanner.nextLine();
+			if(line.equals("finish")){
+				System.out.println("GoodBye");
+				return;
+			}
+			String regex = "\\[.*?\\]";
+			Pattern p = Pattern.compile(regex);
+			Matcher m = p.matcher(line);
+			int s1,s2,e1,e2;
+
+			m.find();
+			s1 = m.start()+1;
+			e1 = m.end()-1;
+
+			m.find();
+			s2 = m.start()+1;
+			e2 = m.end()-1;
+
+
+			String strOper = line.substring(s1,e1);
+			Polynomial oper = Polynomial.parsePolynomial(strOper);
+			String strOped = line.substring(s2,e2);
+			Polynomial oped = Polynomial.parsePolynomial(strOped);
+			String op = line.substring(e1+1,s2-1).trim();
+			System.out.println(eval(oper,oped,op));
+		}
+//		[ (1+2i)x^0 + (1+2i)x^1 ] + [ (1+2i)x^0 + (1+2i)x^1 ]
+//		[ (1+2i)x^0 + (1+2i)x^1 ] - [ (1+2i)x^0 + (1+2i)x^1 ]
+//		[ (1+2i)x^0 + (1+2i)x^1 ] * [ (1+2i)x^0 + (1+2i)x^1 ]
+	}
+
+	public static Polynomial eval(Polynomial a,Polynomial b,String op){
+		switch (op){
+			default:
+				System.out.println("Further feature not available.");
+				return null;
+			case "+":
+				return a.add(b);
+			case "-":
+				return a.subtract(b);
+			case "*":
+				return a.multiply(b);
+		}
 	}
 }
 
@@ -111,9 +146,9 @@ class Complex implements Cloneable{
 // 复数相乘：
 	public Complex multiply(Complex multiplier){
 		// Add your code here.
-		real = this.real * multiplier.real - this.imag * multiplier.imag;
-		imag = this.imag * multiplier.real + this.real * multiplier.imag;
-		Complex m_buff = new Complex(real, imag);
+		double m_real = this.real * multiplier.real - this.imag * multiplier.imag;
+		double m_imag = this.imag * multiplier.real + this.real * multiplier.imag;
+		Complex m_buff = new Complex(m_real, m_imag);
 		return m_buff;
 	}
 }
@@ -137,7 +172,7 @@ class Polynomial implements Cloneable{
 	}
 
 // 把多项式对象转换成形如 (2-3i)x^0 + (-1+2i)x^1 的形式：
-	public String toString(){
+	public String toString() {
 		// Add your code here.
 		String buffer = "";
 		int flag = 0;
@@ -179,6 +214,8 @@ class Polynomial implements Cloneable{
 		}
 		//parse
 		Complex coeff[] = new Complex[max+1];
+		for(int i = 0;i<coeff.length;i++)
+			coeff[i] = new Complex(0,0);
 		regex = "\\(\\d\\p{Punct}?\\di\\)x\\^\\d+";
 		p = Pattern.compile(regex);
 		m = p.matcher(strPolynomial);
@@ -276,11 +313,18 @@ class Polynomial implements Cloneable{
 		// Add your code here.
 		return this.add(subtract.negative());
 	}
-/*
-// TODO 多项式相乘：
+
+// 多项式相乘：
 	public Polynomial multiply(Polynomial multiplier){
 		// Add your code here.
+		int length = this.coeff.length+multiplier.coeff.length;
+		Complex[] p_out = new Complex[length];
+		for(int i=0;i<length;i++)
+			p_out[i] = new Complex(0,0);
+		for(int i=0;i<this.coeff.length;i++)
+			for(int j = 0;j<multiplier.coeff.length;j++){
+				p_out[i+j] = p_out[i+j].add(this.coeff[i].multiply(multiplier.coeff[j]));
+			}
+		return new Polynomial(this.variable,p_out);
 	}
-
-*/
 }
