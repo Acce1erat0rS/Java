@@ -13,7 +13,8 @@ public class Exp2{
 			System.out.println(p);
 			System.out.println("------");
 			p = Polynomial.parsePolynomial("(1+2i)x^0 + (3+4i)x^1 + (5+6i)x^2");
-			System.out.println(p);
+			Polynomial p2 = Polynomial.parsePolynomial("(1+2i)x^0 + (3+4i)x^1 + (5+5i)x^2");
+			System.out.println(p.negative().add(p2));
 	}
 }
 
@@ -139,11 +140,18 @@ class Polynomial implements Cloneable{
 	public String toString(){
 		// Add your code here.
 		String buffer = "";
+		int flag = 0;
 		for(int i = 0; i<this.coeff.length; i++){
-			if(i>0)
-				buffer = buffer +  " + ";
+			if(!coeff[i].isZero())
+			{
+				if(flag>0)
+					buffer = buffer +  " + ";
 			buffer = buffer +"(" + coeff[i].toString() + ")" +  variable + "^" + i;
+			flag++;
+			}
 		}
+		if(buffer == "")
+			buffer = "0";
 		return buffer;
 	}
 
@@ -216,31 +224,60 @@ class Polynomial implements Cloneable{
 		// Add your code here.
 		this.coeff[pos] = val.clone();
 	}
-/*
+
 // 多项式整理，把高次幂去掉。
 // 例如 (1+2i)x^0 + (0+0i)x^1 + (3.3-7i)x^2 + (0+0i)x^3
 // 整理为：(1+2i)x^0 + (0+0i)x^1 + (3.3-7i)x^2
 	public Polynomial trim(){
 		// Add your code here.
-		for()
+		int i;
+		for(i = this.coeff.length-1;i>=0;i--)
+			if(!this.coeff[i].isZero())
+				break;
+		if(i==0)
+			i=1;
+		Complex[] new_coeff = new Complex[i];
+		for(i = 0;i< new_coeff.length;i++)
+			new_coeff[i] = this.coeff[i];
+		this.coeff = new_coeff;
+		return new Polynomial(this.variable,new_coeff);
 	}
-/*
+
 // 多项式求相反数
 	public Polynomial negative(){
 		// Add your code here.
+		Polynomial out = new Polynomial();
+		out.coeff = new Complex[this.coeff.length];
+		for(int i = 0;i<this.coeff.length;i++)
+			out.coeff[i] = this.coeff[i].negative();
+		out.variable = this.variable;
+		return out;
 	}
 
 // 多项式相加：
 	public Polynomial add(Polynomial addend){
 		// Add your code here.
+		if(this.variable!=addend.variable)
+			throw new RuntimeException();
+		int largerPower = this.coeff.length>addend.coeff.length?this.coeff.length:addend.coeff.length;
+		Complex[] c = new Complex[largerPower];
+		for(int i=0;i<addend.coeff.length;i++){
+			c[i] = addend.coeff[i].clone();
+		}
+		for(int i=0;i<this.coeff.length;i++){
+			c[i] = c[i].add(this.coeff[i]);
+		}
+		Polynomial p_return = new Polynomial(this.variable,c);
+		return p_return;
 	}
 
 // 多项式相减：
 	public Polynomial subtract(Polynomial subtract){
 		// Add your code here.
+		return this.add(subtract.negative());
 	}
-
-// 多项式相乘：
+/*
+// TODO 多项式相乘：
 	public Polynomial multiply(Polynomial multiplier){
 		// Add your code here.
 	}
