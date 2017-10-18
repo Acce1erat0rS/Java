@@ -31,7 +31,6 @@ public class Exp2{
 			String strOped = line.substring(s2,e2);
 			Polynomial oped = Polynomial.parsePolynomial(strOped);
 			String op = line.substring(e1+1,s2-1).trim();
-			System.out.println("两个多项式的运算结果为：");
 			System.out.println(eval(oper,oped,op));
 		}
 //		[ (1+2i)x^0 + (1+2i)x^1 ] + [ (1+2i)x^0 + (1+2i)x^1 ]
