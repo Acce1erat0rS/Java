@@ -2,7 +2,7 @@ public class Exp3 {
     public static void main(String[] args){
         long m = Long.parseLong(args[0]);
         binomialDistribution B = new binomialDistribution(0.5,m);
-        System.out.println(B.maximumExpection());
+        System.out.println(B);
     }
 }
 
@@ -33,6 +33,11 @@ class binomialDistribution extends distribution{
         calculator cal = new calculator(1,m);
         cal.do_math();
         return cal.getResult();
+    }
+
+    @Override
+    public String toString(){
+        return "C("+2*m + "," + m + ") * "+p+"^" + 2*m + " = " + this.maximumExpection();
     }
 }
 
