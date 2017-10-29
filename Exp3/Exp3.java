@@ -1,13 +1,23 @@
 public class Exp3 {
     public static void main(String[] args){
-        //int m = Integer.parseInt(args[0]);
-        long m = 100000000L;//9223372036854774807
+        long m = Long.parseLong(args[0]);
         binomialDistribution B = new binomialDistribution(0.5,m);
         System.out.println(B.maximumExpection());
     }
 }
 
-class distribution{
+interface iterable{
+    double getSmaller();
+    double getBigger();
+}
+
+interface calcuatable{
+    void do_math();
+    double getResult();
+}
+
+abstract class distribution{
+    public abstract double maximumExpection();
 }
 
 class binomialDistribution extends distribution{
@@ -18,19 +28,20 @@ class binomialDistribution extends distribution{
         this.p = p;
     }
 
+    @Override
     public double maximumExpection(){
         calculator cal = new calculator(1,m);
         cal.do_math();
-        return cal.get_result();
+        return cal.getResult();
     }
 }
 
-class calculator{
-    long start;
-    long end;
-    long cur_start;
-    long cur_end;
-    double result = 1.0;
+class calculator implements iterable,calcuatable{
+    private long start;
+    private long end;
+    private long cur_start;
+    private long cur_end;
+    private double result = 1.0;
 
     public calculator(long start,long end){
         this.start = start;
@@ -39,12 +50,13 @@ class calculator{
         cur_start = this.start;
     }
 
+
     public void do_math(){
         while(cur_end>=cur_start){
             if(result>1)
-                smaller();
+                result*=getSmaller();
             else
-                bigger();
+                result*=getBigger();
         }
     }
 
@@ -52,17 +64,16 @@ class calculator{
         return 0.25*(this.end+i)/i;
     }
 
-    public void smaller(){
-        this.result*=appendent(cur_end);
-        cur_end--;
+    public double getSmaller(){
+        return appendent(cur_end--);
     }
 
-    public void bigger(){
-        this.result*=appendent(cur_start);
-        cur_start++;
+    public double getBigger(){
+        return appendent(cur_start++);
+
     }
 
-    public double get_result(){
+    public double getResult(){
         return result;
     }
 }
