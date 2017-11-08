@@ -29,7 +29,7 @@ public class ClassWrapper {
         System.out.println(Modifier.toString(c.getModifiers())+" class "+c.getName()+"{\n");
         prConstructor();
         for(Method m :methods){
-            System.out.println(indent+getMehod(m)+";\n");
+            System.out.println(indent+getMehod(m)+"\n");
         }
         System.out.println("\n");
         for(Field f : fields){
