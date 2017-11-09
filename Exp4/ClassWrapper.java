@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.*;
 
 public class ClassWrapper {
@@ -44,12 +42,10 @@ public class ClassWrapper {
         }
     }
 
-    @NotNull
     private String getField(Field f){
         return Modifier.toString(f.getModifiers())+" "+f.getType().getTypeName()+" "+f.getName()+";";
     }
 
-    @NotNull
     private String getParaList(Method m){
         StringBuffer buffer = new StringBuffer("");
         int flag = 0;
@@ -61,7 +57,6 @@ public class ClassWrapper {
         return buffer.toString();
     }
 
-    @NotNull
     private String getMehod(Method m){
         StringBuffer buffer = new StringBuffer("");
         buffer.append(Modifier.toString(m.getModifiers())+" ");
