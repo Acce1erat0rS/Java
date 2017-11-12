@@ -2,22 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 public class combo extends JFrame {
     JTextArea jta = new JTextArea();
     JComboBox<String> jcb = new JComboBox<>();
-    JRadioButton rb1 = new JRadioButton("Large");
-    JRadioButton rb2 = new JRadioButton("Small");
-    java.awt.Font large = new java.awt.Font("arial",java.awt.Font.ITALIC,30);
-
-    java.awt.Font small = new java.awt.Font("arial",java.awt.Font.ITALIC,10);
-
-
-    public void actionPerformed(ActionEvent ae){
-
-    }
 
     public combo() {
         JButton odd = new JButton("ODD");
@@ -50,7 +38,6 @@ public class combo extends JFrame {
             }
         });
 
-
         even.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +45,7 @@ public class combo extends JFrame {
                 jcb.setSelectedIndex(i);
             }
         });
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(50,50,500,400);
