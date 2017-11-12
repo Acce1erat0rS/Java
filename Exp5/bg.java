@@ -1,15 +1,11 @@
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.*;
-
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,8 +17,8 @@ public class bg {
     @XmlJavaTypeAdapter(PairAdapter.class)
     private MPair xRange;
 
-    @XmlElement(name = "yRange")
-    public String yRange;
+    @XmlJavaTypeAdapter(PairAdapter.class)
+    public MPair yRange;
 
     public String getxRange() {
         return xRange.toString();
