@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.Field;
 
-public class ListAdapter extends XmlAdapter<String, List<MPair>> {
+public class ListAdapter extends XmlAdapter<String, ArrayList<MPair>> {
     @Override
-    public String marshal(List<MPair> pairs) throws Exception {
+    public String marshal(ArrayList<MPair> pairs) throws Exception {
         if(null == pairs) {
             return null;
         }
@@ -17,15 +17,17 @@ public class ListAdapter extends XmlAdapter<String, List<MPair>> {
     }
 
     @Override
-    public List<MPair> unmarshal(final String string) throws Exception {
+    public ArrayList<MPair> unmarshal(final String string) throws Exception {
         if(null == string) {
             return null;
         }
-        List<MPair> lmp = new ArrayList<>();
-        String str = string.replaceAll("\\s","");
-        String[] ss = str.split("\n");
-        for(String s:ss){
-            lmp.add(MPair.getInstance(s));
+        ArrayList<MPair> lmp = new ArrayList<>();
+        String[] ss = string.split("\\r?\\n");;
+        for(int i = 0;i<ss.length;i++){
+            ss[i] = ss[i].replaceAll("\\s","");
+            if(ss[i].equals(""))
+                continue;
+            lmp.add(MPair.getInstance(ss[i]));
         }
         return lmp;
     }

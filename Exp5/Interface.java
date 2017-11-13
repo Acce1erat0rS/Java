@@ -105,7 +105,6 @@ public class Interface extends JFrame{
 
         leftCanvas.setLayout(new BorderLayout());
 
-        leftCanvas.add(BorderLayout.CENTER, new ShapesPanel());
         leftCanvas.add(BorderLayout.CENTER, new tallPanel());
 
 
@@ -125,38 +124,27 @@ public class Interface extends JFrame{
 }
 
 
-class ShapesPanel extends JPanel{
-      public ShapesPanel(){
-      setBackground(null);
-      setOpaque(true);
-      }
-      public void paintComponent(Graphics g){
-      super.paintComponent(g);
-      g.setColor(Color.YELLOW);
-      g.fillRect(200, 200, 600, 100);
-
-      }
-}
-
-
 class tallPanel extends JPanel{
+
+    Instance instance;
+
     public tallPanel(){
-        //setBackground(Color.white);
-        setBackground(null);
-        setOpaque(true);
+        setBackground(Color.white);
+        //setBackground(null);
+        //setOpaque(true);
     }
 
     @Override
     public void paint(Graphics g){
         super.paintComponent(g);
-        paintWide(g);
         painttall(g);
+
+        Paintable paintable;
+        paintable = new bg();
+        paintable.paint(g);
+
     }
 
-    private void paintWide(Graphics g){
-        g.setColor(Color.BLUE);
-        g.fillRect(200, 200, 400, 400);
-    }
     private void painttall(Graphics g){
         g.setColor(Color.RED);
         g.fillRect(200, 200, 200, 500);

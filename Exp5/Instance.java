@@ -1,17 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 // XML文件中的根标识
 @XmlRootElement(name = "Instance")
-// 控制JAXB 绑定类中属性和字段的排序
-@XmlType(propOrder = {
-        "bg",
-        "curve",
-        "line",
-        "lines",
-        "points"
-})
 public class Instance {
 
     List<bg> bg;
@@ -19,6 +12,8 @@ public class Instance {
     List<line> line;
     List<lines> lines;
     List<points> points;
+    List<shape> shape;
+    List<scale> scale;
 
     public Instance(){}
 
@@ -28,5 +23,25 @@ public class Instance {
 
     public void setbg(List<bg> bg) {
         this.bg = bg;
+    }
+
+    public List<Paintable> getPaintable(){
+        List<Paintable> lp = new ArrayList<>();
+        for(bg b: bg){
+            lp.add(b);
+        }
+        for(curve c: curve){
+            lp.add(c);
+        }
+        for(line l:line){
+            lp.add(l);
+        }
+        for(lines lns:lines){
+            lp.add(lns);
+        }
+        for(points pts:points){
+            lp.add(pts);
+        }
+        return lp;
     }
 }

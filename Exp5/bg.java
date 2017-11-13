@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.adapters.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class bg {
-    //@XmlElement(name = "col")
+public class bg implements Paintable{
+
     @XmlJavaTypeAdapter(ColorAdapter.class)
     private Color col;
 
@@ -28,6 +28,10 @@ public class bg {
         xRange.y = 3.3f;
     }
 
+    public void paint(Graphics g){
+        g.setColor(Color.BLUE);
+        g.fillRect(200, 200, 400, 400);
+    }
 
     public Color getcol() {
         return this.col;
