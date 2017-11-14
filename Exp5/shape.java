@@ -26,7 +26,7 @@ public class shape implements Paintable{
     float width;
     float height;
 
-    public void paint(Graphics g){
+    public void paint(Graphics g,bg background){
 
     }
 

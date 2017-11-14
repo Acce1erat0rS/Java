@@ -15,7 +15,7 @@ public class bg implements Paintable{
     private Color col;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
-    private MPair xRange;
+    public MPair xRange;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
     public MPair yRange;
@@ -28,9 +28,8 @@ public class bg implements Paintable{
         xRange.y = 3.3f;
     }
 
-    public void paint(Graphics g){
-        g.setColor(Color.BLUE);
-        g.fillRect(200, 200, 400, 400);
+    public void paint(Graphics g,bg background){
+        g.setColor(this.col);
     }
 
     public Color getcol() {
@@ -39,5 +38,12 @@ public class bg implements Paintable{
 
     public void setcol(Color col) {
         this.col = col;
+    }
+
+    public float reletiveConvertX(float x){
+        return (x-xRange.x)/(xRange.y-xRange.x);
+    }
+    public float reletiveConvertY(float y){
+        return (y-yRange.x)/(yRange.y-yRange.x);
     }
 }

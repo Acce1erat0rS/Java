@@ -39,9 +39,49 @@ public class points implements Paintable{
     @XmlJavaTypeAdapter(ListAdapter.class)
     ArrayList<MPair> list;
 
-    public void paint(Graphics g){
+    public void paint(Graphics g,bg background){
+        Graphics2D mG = (Graphics2D) g;
+        Rectangle rect = mG.getClipBounds();
+        mG.setColor(col);
+        mG.setStroke(new BasicStroke(wid));
+
+        if(pad){
+            for(MPair p : list){
+                int x = (int)(background.reletiveConvertX(p.x)*rect.width);
+                int y = rect.height-(int)(background.reletiveConvertY(p.y)*rect.height);
+                mG.fillOval(x, y, radius, radius);
+            }
+        }else{
+            for(MPair p : list){
+                int x = (int)(background.reletiveConvertX(p.x)*rect.width);
+                int y = rect.height-(int)(background.reletiveConvertY(p.y)*rect.height);
+                mG.drawOval(x, y, radius, radius);
+            }
+        }
 
     }
 
 
 }
+
+/*public void paint(Graphics g,bg background){
+        Graphics2D mG = (Graphics2D) g;
+        Rectangle rect = g.getClipBounds();
+        mG.setColor(col);
+        mG.setStroke(new BasicStroke(wid));
+
+        if(pad){
+            for(MPair p : list){
+                int x = (int)(background.reletiveConvertX(p.x)*rect.width);
+                int y = (int)(background.reletiveConvertY(p.y)*rect.height);
+                mG.fillOval(x, y, radius, radius);
+            }
+        }else{
+            for(MPair p : list){
+                int x = (int)(background.reletiveConvertX(p.x)*rect.width);
+                int y = (int)(background.reletiveConvertY(p.y)*rect.height);
+                mG.drawOval(x, y, radius, radius);
+            }
+        }
+
+    }*/

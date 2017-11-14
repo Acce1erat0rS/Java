@@ -1,0 +1,13 @@
+public class func {
+    public static void main(String[] args){
+
+        float x = Float.parseFloat(args[0]);
+        float result = (float)(<TOBEREPLACED>);
+        System.out.println(result);
+    }
+
+    public float run(float x){
+            return (float)(<TOBEREPLACED>);
+            System.out.println("done!");
+        }
+}

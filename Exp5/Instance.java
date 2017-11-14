@@ -27,21 +27,21 @@ public class Instance {
 
     public List<Paintable> getPaintable(){
         List<Paintable> lp = new ArrayList<>();
-        for(bg b: bg){
-            lp.add(b);
-        }
-        for(curve c: curve){
-            lp.add(c);
-        }
-        for(line l:line){
-            lp.add(l);
-        }
-        for(lines lns:lines){
-            lp.add(lns);
-        }
-        for(points pts:points){
-            lp.add(pts);
-        }
+        if(this.bg!=null)
+            for(bg b: bg)
+                lp.add(b);
+        if(this.curve!=null)
+            for(curve c: curve)
+                lp.add(c);
+        if(this.line!=null)
+            for(line l:line)
+                lp.add(l);
+        if(this.lines!=null)
+            for(lines lns:lines)
+                lp.add(lns);
+        if(this.points!=null)
+            for(points pts:points)
+                lp.add(pts);
         return lp;
     }
 }

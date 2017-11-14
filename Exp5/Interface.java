@@ -2,21 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import javax.swing.*;
+import java.util.ArrayList;
+
 public class Interface extends JFrame{
     JButton bt = new JButton("绘图");
     JButton bt2 = new JButton("配置样例");
     JTextArea jta = new JTextArea();
     JTextArea jtin = new JTextArea();
+    String context = "";
+    JPanel leftCanvas;
 
     public Interface(){
         Container con = this.getContentPane();
@@ -24,6 +23,8 @@ public class Interface extends JFrame{
         JPanel leftCanvas=new JPanel();
 
         JPanel p2=new JPanel();
+
+        this.leftCanvas = new JPanel();
 
         JPanel interactionPanel = new JPanel();
 
@@ -49,9 +50,10 @@ public class Interface extends JFrame{
         bt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Object obj = e.getSource();
-                String all = jta.getText();
-                System.out.println(all);
+                context = jta.getText();
+                Instance ins = (Instance) XMLUtil.convertXmlStrToObject(Instance.class, context);
+                leftCanvas.add(BorderLayout.CENTER, new mCanvas(ins));
+                setVisible(true);
             }
         });
 
@@ -93,7 +95,7 @@ public class Interface extends JFrame{
         splitPane.setRightComponent (p2);
 
         con.add(splitPane);
-        int width = con.getWidth();
+        //int width = con.getWidth();
         splitPane.setDividerSize (8);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,10 +106,6 @@ public class Interface extends JFrame{
 
 
         leftCanvas.setLayout(new BorderLayout());
-
-        leftCanvas.add(BorderLayout.CENTER, new tallPanel());
-
-
 
         setVisible(true);
 
@@ -124,30 +122,30 @@ public class Interface extends JFrame{
 }
 
 
-class tallPanel extends JPanel{
+class mCanvas extends JPanel{
 
     Instance instance;
 
-    public tallPanel(){
-        setBackground(Color.white);
-        //setBackground(null);
-        //setOpaque(true);
+
+    public mCanvas(Instance instance){
+        setBackground(instance.bg.get(0).getcol());
+        this.instance = instance;
     }
 
     @Override
     public void paint(Graphics g){
+
+        instance.bg.get(0).getxRange();
         super.paintComponent(g);
-        painttall(g);
+        ArrayList<Paintable>lsp = new ArrayList<>();
+        lsp = (ArrayList<Paintable>) instance.getPaintable();
+        for(Paintable shape:lsp){
+            shape.paint(g,instance.bg.get(0));
+        }
 
-        Paintable paintable;
-        paintable = new bg();
-        paintable.paint(g);
 
     }
 
-    private void painttall(Graphics g){
-        g.setColor(Color.RED);
-        g.fillRect(200, 200, 200, 500);
-    }
+
 
 }

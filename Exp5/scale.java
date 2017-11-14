@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.adapters.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class scale {
+public class scale implements Paintable{
     @XmlElement(name = "col")
     @XmlJavaTypeAdapter(ColorAdapter.class)
     private Color col;
@@ -34,4 +34,8 @@ public class scale {
 
     @XmlElement(name = "precision")
     private int precision;
+
+    public void paint(Graphics g, bg background){
+
+    }
 }
