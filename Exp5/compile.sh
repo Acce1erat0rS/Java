@@ -4,6 +4,6 @@
 #echo $regex
 # sed 's/<TOBEREPLACED>/${2}/' func.stash > 'demo.stash'
 
-echo $1
-sed 's/<TOBEREPLACED>/'$1'/' func.stash > func.java
+echo 's/<TOBEREPLACED>/'$1'/'
+sed 's/<TOBEREPLACED>/'$1'/' ./Exp5/func.stash > ./Exp5/func.java
 javac func.java

@@ -6,8 +6,9 @@ public class func {
         System.out.println(result);
     }
 
-    public float run(float x){
-            return (float)(<TOBEREPLACED>);
+    public float getResult(float x){
             System.out.println("done!");
+            return (float)(<TOBEREPLACED>);
+
         }
 }

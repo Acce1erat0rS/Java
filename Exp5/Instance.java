@@ -5,9 +5,10 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 // XML文件中的根标识
 @XmlRootElement(name = "Instance")
+
 public class Instance {
 
-    List<bg> bg;
+    public List<bg> bg;
     List<curve> curve;
     List<line> line;
     List<lines> lines;
@@ -42,6 +43,12 @@ public class Instance {
         if(this.points!=null)
             for(points pts:points)
                 lp.add(pts);
+        if(this.shape!=null)
+            for(shape shap:shape)
+                lp.add(shap);
+        if(this.scale!=null)
+            for(scale shap:scale)
+                lp.add(shap);
         return lp;
     }
 }

@@ -27,7 +27,38 @@ public class shape implements Paintable{
     float height;
 
     public void paint(Graphics g,bg background){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(wid));
+        Rectangle rect = g2d.getClipBounds();
+        g2d.setColor(col);
+        type = type.replaceAll("\\s","");
+        if(type.equals("oval")){
+            int x = (int)(background.reletiveConvertX(center.x)*rect.width);
+            int y = rect.height-(int)(background.reletiveConvertY(center.y)*rect.height);
+            if(pad){
+                //TODO:change the width and height relative to bg's width and height
+                g2d.fillOval(x, y, (int)(width*rect.width), (int)(height*rect.height));
 
+            }
+            else{
+                g2d.drawOval(x, y, (int)(width*rect.width), (int)(height*rect.height));
+
+            }
+        }
+        else{
+            int x = (int)(background.reletiveConvertX(center.x)*rect.width);
+            int y = rect.height-(int)(background.reletiveConvertY(center.y)*rect.height);
+            if(pad){
+                g2d.fillRect(x-(int)(width*rect.width/background.getHorizontalLen()/2),
+                        y- (int)(height*rect.height/background.getVerticalLen()/2), (int)(width*rect.width/background.getHorizontalLen()), (int)(height*rect.height/background.getVerticalLen()));
+
+            }
+            else{
+                g2d.drawRect(x-(int)(width*rect.width/background.getHorizontalLen()/2),
+                        y- (int)(height*rect.height/background.getVerticalLen()/2), (int)(width*rect.width/background.getHorizontalLen()), (int)(height*rect.height/background.getVerticalLen()));
+
+            }
+        }
     }
 
 }

@@ -19,7 +19,7 @@ public class line implements Paintable {
     @XmlJavaTypeAdapter(SlopeAdapter.class)
     Slope slope;
 
-    public void paint(Graphics g,bg background){
+    public void paint(final Graphics g,bg background){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(wid));
         Rectangle rect = g2d.getClipBounds();

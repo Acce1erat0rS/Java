@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -28,7 +29,7 @@ public class curve implements Paintable {
 
     public void paint(Graphics g,bg background){
         compile();
-        for(int i =0;i<20;i++)
+        for(int i =0;i<3;i++)
             run(i);
 
     }
@@ -49,7 +50,12 @@ public class curve implements Paintable {
     public void run(float x){
         try {
             Class c = Class.forName("func");
-            Class.forName("func").getMethod("run", new Class[] {}).invoke(null,(Object)x);
+            for(Method m : c.getMethods()){
+                System.out.println(m.toGenericString());
+            }
+
+
+            Class.forName("func").getDeclaredMethod("getResult", new Class[] {}).invoke(null,(Object)x);
         }
         catch (Exception e) {
             e.printStackTrace();
