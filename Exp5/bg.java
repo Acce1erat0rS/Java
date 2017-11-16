@@ -47,6 +47,13 @@ public class bg implements Paintable{
         return (y-yRange.x)/(yRange.y-yRange.x);
     }
 
+    public double reletiveConvertX(double x){
+        return (x-xRange.x)/(xRange.y-xRange.x);
+    }
+    public double reletiveConvertY(double y){
+        return (y-yRange.x)/(yRange.y-yRange.x);
+    }
+
     public float getVerticalLen(){return  yRange.y-yRange.x;};
     public float getHorizontalLen(){return  xRange.y-xRange.x;}
 }

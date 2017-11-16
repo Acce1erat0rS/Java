@@ -1,15 +1,18 @@
+
+
+
 public class func {
     int f;
     public static void main(String[] args){
-
-        float x = Float.parseFloat(args[0]);
-        float result = (float)(2*x);
-        System.out.println(result);
-    }
-
-    public float getResult(float x){
-        f = 30;
-        System.out.println("done!");
-        return (float)(2*x);
+        if(args.length == 0){
+            return;
+        }
+        String out = "";
+        for(String s:args){
+            float x = Float.parseFloat(s);
+            float result = (float)(Math.pow(x,2)-0.05);
+            out = out+result+" ";
+        }
+        System.out.println(out);
     }
 }

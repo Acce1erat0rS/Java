@@ -64,10 +64,12 @@ public class scale implements Paintable{
                     rect.height - rto);
 
             int count = 0;
-            while (count<this.amount){
-                g2d.drawLine();
+            float delta = this.step/background.getVerticalLen()*rect.height;
+            while (count<this.amount+1){
+                g2d.drawLine((int)(rpos*rect.width),rect.height - rfrom,(int)(rpos*rect.width)-4,rect.height - rfrom);
+                g2d.drawString(String.format("%."+precision+"f",count*step+from),(int)(rpos*rect.width)-30,rect.height - rfrom);
 
-
+                rfrom+=(int)delta;
                 count++;
             }
         }
@@ -78,6 +80,19 @@ public class scale implements Paintable{
                 g2d.drawLine(rfrom,rect.height-(int)(rpos*rect.height),
                     rto,rect.height-(int)(rpos*rect.height));
 
+            int count = 0;
+            float delta = this.step/background.getHorizontalLen()*rect.width;
+            while (count<this.amount+1){
+                g2d.drawLine(rfrom,
+                        rect.height-(int)(rpos*rect.height),
+                        rfrom,
+                        rect.height-(int)(rpos*rect.height)+4);
+
+                g2d.drawString(String.format("%."+precision+"f",count*step+from),rfrom-4,rect.height-(int)(rpos*rect.height)+15);
+
+                rfrom+=(int)delta;
+                count++;
+            }
         }
 
 

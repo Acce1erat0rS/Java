@@ -1,3 +1,6 @@
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,38 +31,49 @@ public class curve implements Paintable {
     String function;
 
     public void paint(Graphics g,bg background){
-        compile();
-        for(int i =0;i<3;i++)
-            run(i);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(col);
+        g2d.setStroke(new BasicStroke(wid));
+        Rectangle rect = g2d.getClipBounds();
 
-    }
 
-    public void compile(){
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("javascript");
+
+        double y = 0D;
         try{
-            function.replaceAll("\\s","");
-            String sh = "./Exp5/compile.sh \'"+function+"\'";
-            Process ps = Runtime.getRuntime().exec(sh);
-            ps.waitFor();
-        }catch (Exception exc){
-            exc.printStackTrace();
-        }
-    }
-
-
-
-    public void run(float x){
-        try {
-            Class c = Class.forName("func");
-            for(Method m : c.getMethods()){
-                System.out.println(m.toGenericString());
-            }
-
-
-            Class.forName("func").getDeclaredMethod("getResult", new Class[] {}).invoke(null,(Object)x);
-        }
-        catch (Exception e) {
+            engine.put("x",0);
+            y = (Double)engine.eval(function);
+        }catch(ScriptException e){
             e.printStackTrace();
         }
+
+        int prevx = (int)(background.reletiveConvertX(0)*rect.width);
+        int prevy = rect.height-(int)(background.reletiveConvertY(y)*rect.height);
+        for(float f = this.range.x;f<this.range.y;f+=background.getHorizontalLen()/100){
+            try{
+                engine.put("x",f);
+                y = (Double)engine.eval(function);
+            }catch(ScriptException e){
+                e.printStackTrace();
+            }
+
+            int curx = (int)(background.reletiveConvertX(f)*rect.width);
+            int cury = rect.height-(int)(background.reletiveConvertY(y)*rect.height);
+
+            g2d.drawLine(prevx,prevy,curx,cury);
+
+            prevx = curx;
+            prevy = cury;
+        }
+
+    }
+
+
+
+    public double run(float x){
+
+        return 0D;
     }
 
 
