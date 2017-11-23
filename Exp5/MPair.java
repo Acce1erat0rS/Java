@@ -1,6 +1,4 @@
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement
 public class MPair {

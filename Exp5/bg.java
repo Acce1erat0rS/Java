@@ -1,11 +1,8 @@
-
-import java.awt.*;
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.awt.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,10 +12,10 @@ public class bg implements Paintable{
     private Color col;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
-    public MPair xRange;
+    private MPair xRange;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
-    public MPair yRange;
+    private MPair yRange;
 
     public String getxRange() {
         return xRange.toString();

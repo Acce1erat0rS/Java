@@ -1,7 +1,6 @@
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.awt.*;
 
@@ -12,19 +11,20 @@ import java.awt.*;
 public class shape implements Paintable{
 
     @XmlJavaTypeAdapter(ColorAdapter.class)
-    Color col;
+    private Color col;
 
-    int wid;
+    private int wid;
 
-    String type;
+    private String type;
 
-    Boolean pad;
+    private Boolean pad;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
-    MPair center;
+    private MPair center;
 
-    float width;
-    float height;
+    private float width;
+
+    private float height;
 
     public void paint(Graphics g,bg background){
         Graphics2D g2d = (Graphics2D) g;
@@ -36,12 +36,15 @@ public class shape implements Paintable{
             int x = (int)(background.reletiveConvertX(center.x)*rect.width);
             int y = rect.height-(int)(background.reletiveConvertY(center.y)*rect.height);
             if(pad){
-                //TODO:change the width and height relative to bg's width and height
-                g2d.fillOval(x, y, (int)(width*rect.width), (int)(height*rect.height));
+                int Pwid = (int)(width*rect.width);
+                int Phig = (int)(int)(height*rect.height);
+                g2d.fillOval(x-Pwid/2, y-Phig/2, Pwid, Phig);
 
             }
             else{
-                g2d.drawOval(x, y, (int)(width*rect.width), (int)(height*rect.height));
+                int Pwid = (int)(width*rect.width);
+                int Phig = (int)(int)(height*rect.height);
+                g2d.drawOval(x-Pwid/2, y-Phig/2, Pwid, Phig);
 
             }
         }

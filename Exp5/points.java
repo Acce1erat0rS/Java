@@ -49,13 +49,13 @@ public class points implements Paintable{
             for(MPair p : list){
                 int x = (int)(background.reletiveConvertX(p.x)*rect.width);
                 int y = rect.height-(int)(background.reletiveConvertY(p.y)*rect.height);
-                mG.fillOval(x, y, radius, radius);
+                mG.fillOval(x-radius, y-radius, 2*radius, 2*radius);
             }
         }else{
             for(MPair p : list){
                 int x = (int)(background.reletiveConvertX(p.x)*rect.width);
                 int y = rect.height-(int)(background.reletiveConvertY(p.y)*rect.height);
-                mG.drawOval(x, y, radius, radius);
+                mG.drawOval(x-radius, y-radius, 2*radius, 2*radius);
             }
         }
 

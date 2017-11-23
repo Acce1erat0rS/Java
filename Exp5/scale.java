@@ -1,11 +1,9 @@
-import java.awt.*;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.awt.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -56,36 +54,39 @@ public class scale implements Paintable{
         direction = direction.replaceAll("\\s","");
         if(direction.equals("y")||direction.equals("Y")){
             float rpos = background.reletiveConvertY(pos);
-            int rfrom = (int)(background.reletiveConvertY(from)*rect.height);
-            int rto = (int)(background.reletiveConvertY(from+step*amount)*rect.height);
+            float rfrom = background.reletiveConvertY(from)*rect.height;
+            float rto = (int)(background.reletiveConvertY(from+step*amount)*rect.height);
             g2d.drawLine((int)(rpos*rect.width),
-                           rect.height - rfrom,
+                    (int)(rect.height - rfrom),
                            (int)(rpos*rect.width),
-                    rect.height - rto);
+                    (int)(rect.height - rto));
 
             int count = 0;
             float delta = this.step/background.getVerticalLen()*rect.height;
             while (count<this.amount+1){
-                g2d.drawLine((int)(rpos*rect.width),rect.height - rfrom,(int)(rpos*rect.width)-4,rect.height - rfrom);
+                g2d.drawLine((int)(rpos*rect.width),
+                        (int)(rect.height - rfrom),
+                        (int)(rpos*rect.width)-4,
+                        (int)(rect.height - rfrom));
                 g2d.drawString(String.format("%."+precision+"f",count*step+from),(int)(rpos*rect.width)-30,rect.height - rfrom);
 
-                rfrom+=(int)delta;
+                rfrom+=delta;
                 count++;
             }
         }
         else{
             float rpos = background.reletiveConvertX(pos);
-            int rfrom = (int)(background.reletiveConvertX(from)*rect.width);
-            int rto = (int)(background.reletiveConvertX(from+step*amount)*rect.width);
-                g2d.drawLine(rfrom,rect.height-(int)(rpos*rect.height),
-                    rto,rect.height-(int)(rpos*rect.height));
+            float rfrom = background.reletiveConvertX(from)*rect.width;
+            float rto = background.reletiveConvertX(from+step*amount)*rect.width;
+                g2d.drawLine((int)rfrom,rect.height-(int)(rpos*rect.height),
+                        (int)rto,rect.height-(int)(rpos*rect.height));
 
             int count = 0;
             float delta = this.step/background.getHorizontalLen()*rect.width;
             while (count<this.amount+1){
-                g2d.drawLine(rfrom,
+                g2d.drawLine((int)rfrom,
                         rect.height-(int)(rpos*rect.height),
-                        rfrom,
+                        (int)rfrom,
                         rect.height-(int)(rpos*rect.height)+4);
 
                 g2d.drawString(String.format("%."+precision+"f",count*step+from),rfrom-4,rect.height-(int)(rpos*rect.height)+15);

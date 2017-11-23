@@ -1,5 +1,4 @@
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.lang.reflect.Field;
 
 public class SlopeAdapter extends XmlAdapter<String, Slope> {
     public Slope unmarshal(String s) {

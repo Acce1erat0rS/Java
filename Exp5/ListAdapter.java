@@ -1,8 +1,5 @@
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.lang.reflect.Field;
 
 public class ListAdapter extends XmlAdapter<String, ArrayList<MPair>> {
     @Override

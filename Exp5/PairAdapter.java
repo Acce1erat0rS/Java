@@ -1,5 +1,4 @@
-import javax.xml.bind.annotation.adapters.*;
-import java.util.List;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class PairAdapter extends XmlAdapter<String, MPair>{
     @Override

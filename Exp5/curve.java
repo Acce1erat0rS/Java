@@ -7,35 +7,31 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class curve implements Paintable {
 
     @XmlJavaTypeAdapter(ColorAdapter.class)
-    Color col;
+    private Color col;
 
     @XmlElement(name = "wid")
-    int wid;
+    private int wid;
 
     @XmlJavaTypeAdapter(PairAdapter.class)
-    MPair range;
+    private MPair range;
 
     @XmlElement(name = "amount")
-    int amount;
+    private int amount;
 
     @XmlElement(name = "function")
-    String function;
+    private String function;
 
     public void paint(Graphics g,bg background){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(col);
         g2d.setStroke(new BasicStroke(wid));
         Rectangle rect = g2d.getClipBounds();
-
 
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("javascript");
@@ -50,7 +46,7 @@ public class curve implements Paintable {
 
         int prevx = (int)(background.reletiveConvertX(0)*rect.width);
         int prevy = rect.height-(int)(background.reletiveConvertY(y)*rect.height);
-        for(float f = this.range.x;f<this.range.y;f+=background.getHorizontalLen()/100){
+        for(float f = this.range.x;f<this.range.y;f+=background.getHorizontalLen()/amount){
             try{
                 engine.put("x",f);
                 y = (Double)engine.eval(function);
@@ -69,12 +65,5 @@ public class curve implements Paintable {
 
     }
 
-
-
-    public double run(float x){
-
-        return 0D;
-    }
-
-
 }
+
