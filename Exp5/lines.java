@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class lines implements Paintable {
+public class lines extends BaseShape implements Paintable {
     @XmlJavaTypeAdapter(ColorAdapter.class)
     Color col;
 

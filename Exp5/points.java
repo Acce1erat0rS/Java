@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class points implements Paintable{
+public class points extends BaseShape implements Paintable{
     /*<points>
      *<pad> true </pad>
      *<col> red </col>

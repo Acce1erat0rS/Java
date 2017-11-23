@@ -8,7 +8,7 @@ import java.awt.*;
 // XML文件中的根标识
 @XmlRootElement(name = "shape")
 // 控制JAXB 绑定类中属性和字段的排序
-public class shape implements Paintable{
+public class shape extends BaseShape implements Paintable{
 
     @XmlJavaTypeAdapter(ColorAdapter.class)
     private Color col;
@@ -36,14 +36,14 @@ public class shape implements Paintable{
             int x = (int)(background.reletiveConvertX(center.x)*rect.width);
             int y = rect.height-(int)(background.reletiveConvertY(center.y)*rect.height);
             if(pad){
-                int Pwid = (int)(width*rect.width);
-                int Phig = (int)(int)(height*rect.height);
+                int Pwid = (int)(width*rect.width/background.getHorizontalLen());
+                int Phig = (int)(height*rect.height/background.getVerticalLen());
                 g2d.fillOval(x-Pwid/2, y-Phig/2, Pwid, Phig);
 
             }
             else{
-                int Pwid = (int)(width*rect.width);
-                int Phig = (int)(int)(height*rect.height);
+                int Pwid = (int)(width*rect.width/background.getHorizontalLen());
+                int Phig = (int)(height*rect.height/background.getVerticalLen());
                 g2d.drawOval(x-Pwid/2, y-Phig/2, Pwid, Phig);
 
             }

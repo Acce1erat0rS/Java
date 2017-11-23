@@ -6,7 +6,7 @@ import java.awt.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class line implements Paintable {
+public class line extends BaseShape implements Paintable {
 
     @XmlJavaTypeAdapter(ColorAdapter.class)
     Color col;

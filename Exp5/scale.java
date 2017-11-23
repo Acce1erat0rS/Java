@@ -7,7 +7,7 @@ import java.awt.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class scale implements Paintable{
+public class scale extends BaseShape implements Paintable{
 
 /*    <scale>
         <col> black </col>
