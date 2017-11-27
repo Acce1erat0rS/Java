@@ -57,19 +57,6 @@ public class MYSqlWorkbench extends JFrame {
         setVisible(true);
     }
 
-    public void Connect(){
-        Properties props = new Properties();
-        //props.load(new FileInputStream(userDir + “/” + paraFile));
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException CFE){
-            System.out.println(CFE.getStackTrace());
-        }
-        //String url = "jdbc:mysql://" + host + ":" + port + "/" + db;
-        //Connection con = DriverManager.getConnection(url, user, password);
-
-    }
 
 
     public static void main(String[] args){
