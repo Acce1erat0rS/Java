@@ -50,7 +50,7 @@ public class ProgrammablePainter extends JFrame{
         LoadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File file = new File("/Users/sp1ca/IdeaProjects/java_git/Exp5/layout.xml");
+                File file = new File("./layout.xml");
                 BufferedReader reader = null;
                 try {
                     reader = new BufferedReader(new FileReader(file));
