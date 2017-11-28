@@ -1,5 +1,6 @@
 *.swo
-
+.gitignore
+config.dat
 *.class
 *.swp
 *.iml
