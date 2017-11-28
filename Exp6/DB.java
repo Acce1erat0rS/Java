@@ -1,68 +1,106 @@
+
+import dnl.utils.text.table.TextTable;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class DB {
-    public static final String url = "jdbc:mysql://www.liutianyu.cn/EDUCATION";
-    public static final String name = "com.mysql.jdbc.Driver";
-    public static final String user = "root";
-    public static final String password = "acce1erat0r";
+    private String url;
+    private String password;
+    private String user;
 
     public Connection conn = null;
-    public PreparedStatement pst = null;
 
     public DB() {
         String pwd = System.getProperty("user.dir");
         Properties props = new Properties();
         try{
-            props.load(new FileInputStream(pwd+"/config.dat"));
+            props.load(new FileInputStream(pwd+"/Exp6/config.dat"));
 
         }
         catch (IOException ioe){
             ioe.printStackTrace();
         }
 
+        url = "jdbc:mysql://"+props.getProperty("host")+"/"+props.getProperty("db");
+        user = props.getProperty("user");
+        password = props.getProperty("password");
+
         try {
-            Class.forName(name);
-            conn = DriverManager.getConnection(url, user, password);//获取连接
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public ArrayList<String> getColumnList(String table){
+        ArrayList<String> res = new ArrayList<>();
+        try{
+            Statement statement = conn.createStatement();
+            String cmd = "SHOW COLUMNS FROM "+table;
+            ResultSet rs = statement.executeQuery(cmd);
+
+            String name = "";
+            while(rs.next()) {
+                name = rs.getString("Field");
+                res.add(name);
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 
     public String getResult(String cmd){
         try {
-            String result = "";
+            String result = ">"+cmd+"\n";
             Statement statement = conn.createStatement();
-
-
-            // 结果集
             ResultSet rs = statement.executeQuery(cmd);
-
-            System.out.println("-----------------");
-            System.out.println("执行结果如下所示:");
-            System.out.println("-----------------");
-            System.out.println(" 学号" + "\t" + " 姓名");
-            System.out.println("-----------------");
 
             String name = null;
 
-            while(rs.next()) {
+            ResultSetMetaData rsmt = rs.getMetaData();
 
-                // 选择sname这列数据
-                name = rs.getString("SN");
+            int len = rsmt.getColumnCount();
 
-                // 首先使用ISO-8859-1字符集将name解码为字节序列并将结果存储新的字节数组中。
-                // 然后使用GB2312字符集解码指定的字节数组
-                name = new String(name.getBytes("UTF-8"),"UTF-8");
-
-                // 输出结果
-                System.out.println(rs.getString("sno") + "\t" + name);
-                result+=rs.getString("sno") + "\t" + name+'\n';
+            for(int i=0;i<len;i++){
+                result+="+--------------";
             }
+            result+="+\n";
+
+            for(int i=0;i<len;i++){
+                String ColName = String.format("%14s",rsmt.getColumnName(i+1));
+                result+="|"+ColName;
+            }
+            result+="|\n";
+            for(int i=0;i<len;i++){
+                result+="+--------------";
+            }
+            result+="+\n";
+
+            while(rs.next()) {
+                for(int i=0;i<len;i++){
+                    String dat = rs.getString(i+1);
+                    result+="|"+String.format("%14s",dat);
+                    dat = new String(dat.getBytes("UTF-8"),"UTF-8");
+                }
+                result+="|\n";
+            }
+
+            for(int i=0;i<len;i++){
+                result+="+--------------";
+            }
+            result+="+\n\n";
+
+
 
             rs.close();
             conn.close();
@@ -77,7 +115,6 @@ public class DB {
     public void close() {
         try {
             this.conn.close();
-            this.pst.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
