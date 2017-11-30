@@ -11,7 +11,7 @@ interface iterable{
     double getBigger();
 }
 
-interface calcuatable{
+interface calculable {
     void do_math();
     double getResult();
 }
@@ -30,7 +30,7 @@ class binomialDistribution extends distribution{
 
     @Override
     public double maximumExpection(){
-        calculator cal = new calculator(1,m);
+        calculable cal = new calculator(1,m);
         cal.do_math();
         return cal.getResult();
     }
@@ -41,7 +41,7 @@ class binomialDistribution extends distribution{
     }
 }
 
-class calculator implements iterable,calcuatable{
+class calculator implements iterable, calculable {
     private long start;
     private long end;
     private long cur_start;
@@ -54,7 +54,6 @@ class calculator implements iterable,calcuatable{
         cur_end = this.end;
         cur_start = this.start;
     }
-
 
     public void do_math(){
         while(cur_end>=cur_start){

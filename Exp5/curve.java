@@ -10,7 +10,7 @@ import java.awt.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class curve implements Paintable {
+public class curve extends BaseShape implements Paintable {
 
     @XmlJavaTypeAdapter(ColorAdapter.class)
     private Color col;

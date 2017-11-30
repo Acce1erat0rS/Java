@@ -5,12 +5,8 @@ public class ClassWrapper {
     private Class<?> c;
     private Method[] methods;
     private Field[] fields;
-    private Member[] members;
-    private Method[] constructionMethod;
-    Constructor[] constructors;
-    String indent = "        ";
-
-
+    private Constructor[] constructors;
+    private String indent = "        ";
 
     public ClassWrapper(String className){
         this.className = className;
@@ -24,8 +20,8 @@ public class ClassWrapper {
         }
     }
 
-    @Override
-    public String toString(){
+
+    public void printString(){
         System.out.println(Modifier.toString(c.getModifiers())+" class "+c.getName()+"{\n");
         prConstructor();
         for(Method m :methods){
@@ -36,13 +32,19 @@ public class ClassWrapper {
             System.out.println(indent+getField(f)+"\n");
         }
         System.out.println("}\n");
-        return "";
+    }
+
+    private void prConstructor(){
+
+        this.constructors = c.getConstructors();
+        for(Constructor constructor : constructors){
+            System.out.println(indent+constructor.toString()+";\n");
+        }
     }
 
     private String getField(Field f){
         return Modifier.toString(f.getModifiers())+" "+f.getType().getTypeName()+" "+f.getName()+";";
     }
-
 
     private String getParaList(Method m){
         StringBuffer buffer = new StringBuffer("");
@@ -61,14 +63,6 @@ public class ClassWrapper {
         buffer.append(m.getReturnType().toString()+" "+m.getName());
         buffer.append("("+getParaList(m)+");");
         return buffer.toString();
-    }
-
-    public void prConstructor(){
-
-        this.constructors = c.getConstructors();
-        for(Constructor constructor : constructors){
-            System.out.println(indent+constructor.toString()+";\n");
-        }
     }
 
     private void wrapperErr(Exception e){

@@ -16,7 +16,9 @@ class ColorAdapter extends XmlAdapter<String, Color> {
                 color = new Color(Integer.parseInt(sl[0]),
                         Integer.parseInt(sl[1]),
                         Integer.parseInt(sl[2]));
-            }catch(Exception e2){}
+            }catch(Exception e2){
+                System.out.println("Please specify color name or use R,G,B format");
+            }
         }
         return color;
     }

@@ -9,7 +9,7 @@ public class Exp4{
     public static void main(String[] args){
         for(String className : args){
             ClassWrapper cw = new ClassWrapper(className);
-            cw.toString();
+            cw.printString();
         }
     }
 }
