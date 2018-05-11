@@ -9,7 +9,6 @@ public class Receiver{
     public static void main(String[] args){
         LineReceiver lr = new LineReceiver(new CharReceiver(6102));
         String pattern = args[0];
-        //String pattern = "wz";
         int count = lr.receivePattern(pattern);
         System.out.println("共收到模式串 " + pattern + " " + count + " 次");
     }
@@ -29,12 +28,14 @@ class CharReceiver {
 
     public char receive(){
         try{
-            byte[] recvBuf = new byte[10];
-            DatagramPacket dp = new DatagramPacket(recvBuf,recvBuf.length);
+            byte[] recvBuffer = new byte[10];
+            //udpsocket服务，使用DatagramSocket对象
+            DatagramPacket dp = new DatagramPacket(recvBuffer,recvBuffer.length);
             socketReceiver.receive(dp);
-            String recvStr = new String(dp.getData() , 0 ,dp.getLength());
-            System.out.println("收到:" + recvStr);
-            return recvStr.charAt(0);
+            //通过数据包的方法解析数据包中的数据,比如，地址、端口、数据内容等
+            String recvString = new String(dp.getData() , 0 ,dp.getLength());
+            System.out.println("收到:" + recvString);
+            return recvString.charAt(0);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -92,3 +93,6 @@ class LineReceiver {
         return count;
     }
 }
+
+
+

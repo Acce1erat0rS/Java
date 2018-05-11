@@ -1,0 +1,287 @@
+Display System 显示系统 
+Video Display Devices  视频显示设备  
+Random Scan Displays 随机扫描显示器 
+Cathode Ray Tube 阴极射线管 
+Direct View Storage Tubes 直视存储管 
+Raster Scan Display 光栅显示器 
+Frame 帧
+Raster 光栅 
+Pixel 像素 
+Scan Line 扫描线 
+Frame Rate  帧频 
+Line Rate  行频 
+Resolution 分辨率 
+Screen Coordinate 屏幕坐标 
+Frame Buffer 帧缓存器 
+Color CRT 彩色阴极射线管
+Shadow Mask 荫罩板 
+Three Dimensional Viewing Devices 三维观察设备 
+Virtual Reality Systems  虚拟现实系统
+Input Devices   输入设备
+Keyboard 键盘
+Mouse 鼠标
+Trackball  跟踪球 
+Spaceball  空间球
+Joysticks 操纵杆
+Digitizers 数字化仪
+Light Pen  光笔
+Scan machine 扫描仪
+Touch panel 触摸板
+Voice System 音频系统
+Data Gloves 数据手套
+Sensor  传感器
+Tracker 跟踪器
+Force Feedback力反馈
+Hard-Copy Devices 硬拷贝设备
+Inkjet Plotter 绘图仪
+Plane Plotter 平板绘图仪
+Drum Plotter 鼓式绘图仪
+Graphics Software 图形软件
+Chapter 3 Graphics output primitive
+Line Drawing Algorithms 直线插补算法
+DDA Algorithm(Digital Differential Analyzer) 数字微分分析法
+scan conversion 扫描转换 
+Sample 采样
+Coordinate 坐标
+Slope of the line 直线斜率
+integer values  整数值
+Circle Generating Algorithms 圆弧插补算法
+Bresenham’s  Circle Algorithm   Bresenham圆弧插补算法 
+Radium 半径
+Midpoint Circle Algorithm 中点圆算法
+Polygon 多边形
+Polygon Filling Algorithms 多边形填充算法
+Scan-line Approaches 扫描线方法
+Bounding Box 包围盒
+Inside-Outside Tests 内外测试
+Odd-even Rule 奇偶规则
+interior point 内部点
+exterior point 外部点
+Nonzero Winding Number Rule 非零环绕数规则
+Winding Number 环绕数
+Counterclockwise 逆时针
+Y bucket  Y桶
+Edge Table 边表
+Active Edge List-AEL 活化边表
+Iterative 反复的
+coherence连贯的
+intersection 交点
+Edge Fill Algorithm 边缘填充算法
+complement  取余
+Fence Fill Algorithm 栅栏填充算法
+Seed Fill Algorithm种子填充算法
+Boundary Fill Algorithm 边界填充算法
+4-connected Neighbourhood 四连通邻域
+8-connected Neighbourhood 八连通邻域
+Recursive Method 递归方法
+Scan Line Algorithm 扫描线算法
+Flood Fill Algorithm 泛滥填充算法
+4-connected Area 四连通区域
+8-connected Area 八连通区域
+aliasing 走样
+Antialiasing 反走样 
+Supersampling 过采样
+
+Chapter 4 Transformation
+Coordinate 坐标
+Axis 轴
+Matrix 矩阵
+Intersection point 交点
+Origin 原点
+Coordinate origin 坐标原点 
+2D Transformation 二维坐标变换
+Translation Vector 平移向量
+Translation 平移
+Rigid-body 刚体
+Rotation 旋转
+Pivot  枢轴，中心点，基准点
+Rotation angle 旋转角
+Rotation points 旋转点
+Scaling 缩放
+Polygon 多边形
+Scaling factors 缩放系数
+Enlargement 放大
+Differential Scaling 差值缩放
+Uniform Scaling  一致缩放（对X、Y的缩放系数相同）
+Fixed Point 固定点
+——Scaling relative to a chosen fixed point 相对于固定点的缩放
+Matrix Representation 矩阵表示法
+Homogeneous Coordinates 齐次坐标
+Cartesian coordinate 笛卡尔坐标
+Parameter 参数
+——Homogeneous Parameter 齐次参量
+Composite Transformation 级联变换
+Reflection 反射
+Shear 错切
+Reference line 参考线
+Affine Transformations 仿射变换
+Orientation angle 定位角
+3D Transformation 三维坐标变换
+3D Viewing 三维观察
+Viewing Pipeline 观察途径
+Viewport 视口
+Viewing Coordinates观察坐标
+View Plane 投影平面，视平面
+View reference point 观察参考点
+View-plane normal vector 投影面法向量
+View-plane Distance 投影面距离
+View-up Vector 观察向上向量
+Projections 投影
+Projection reference point 投影参考点
+Projection vector 投影矢量
+Perspective Projection 透视投影
+Parallel Projection 平行投影
+Far plane 远裁剪面
+Near plan 近裁剪面
+View Volume 视域
+Window 显示窗口
+Center of Projection 投影中心
+Orthographic [,ɔ:θəu'ɡræfik]正投影
+3D Entity 3D实体
+Viewport Transformation 窗口-视域变换
+Map 映射
+Clipping 剪裁
+Clip window 剪裁窗口
+Point Clipping 点的裁剪
+Line Clipping 线段的裁剪
+Algorithm ['ælɡəriðəm] 算法
+Cohen-Sutherland Line Clipping 科恩-苏特算法，利用编码的剪裁算法
+Intersection calculation 求交计算
+Binary Region Codes 二进制区域编码
+Liang-Barsky Line Clipping 梁友栋-巴斯基剪裁算法
+Midpoint Subdivision Algorithm 中点细分（剪裁）算法
+Three-Dimensional Clipping 三维裁剪
+Polygon clipping 多边形裁剪
+Normalization 归一化，标准化
+
+Chapter 5  Introduction to OpenGL
+Interface 接口
+Software developers 软件开发者
+Primitives 基元，图元
+Display lists 显示列表
+Modeling transformations 模型变换
+Lighting 灯光
+Texturing 材质贴图
+Anti-aliasing ['ænti 'eiliəsiŋ] 反走样
+GDI=Graphic Devices Interface 图形设备接口
+API=Application Programming Interface 应用程序接口
+Driving Programmes 驱动程序
+Display Hardware 显示硬体（eg.显卡）
+OpenGL Library  OpenGL核心库（加前缀<Prefix>‘gl’）
+OpenGL Utility Library  OpenGL实用程序库（加前缀‘glu’）
+Window Interface Library 窗口系统扩展库（加前缀‘glx’‘wgl’‘pgl’）
+OpenGL Auxiliary library 编程辅助库（加前缀‘glaux’）
+OpenGL Utility Toolkit   OpenGL实用工具包（加前缀‘glut’）
+Header files 头文件
+Color Buffers 颜色缓冲区
+Depth Buffers 深度缓冲区（存储每个像素的深度值）
+Stencil Buffer 模板缓冲区（限制绘制到屏幕某个区域中的内容）
+Accumulation Buffer 累积缓存（区存储RGBA颜色数据，用来累积一系列图像，形成一个最终的合成图像）
+Double Buffer 双缓冲区（前端可视缓冲区与后台可绘制缓冲区的组合．它可以使得在显示一幅图像的同时绘制另一幅图像）
+Preset values 预设值
+Alpha Value 阿尔法通道值（用来存储透明度信息）
+Mode 模式
+Stack 栈
+Convex Polygon 凸多边形
+Diameter 直径
+Line Stipple 点划线
+Argument=Parameter 参数
+Finite Time 有限时间
+Projection Matrix 投影矩阵
+Modelview Matrix 模型矩阵 
+Window management 视窗管理
+Callback Function 回调函数
+Input Events 输入事件
+Event processing loop 事件处理环
+Initialize 初始化
+Display Mode 显示模式
+Trigger 触发
+Reshape 重设形状
+chapter 6     Visible-Surface Detection Methods(可见面判别)
+Ambiguity 二义性
+Object-Space Methods  物体空间算法
+Ray casting Method  光线投射  
+Back face detection  背面剔除
+Image-Space Methods  图象空间算法
+Z－buffer   深度缓存器
+Scan-Line   扫描线 
+Depth Sorting Method  深度排序法（画家算法）
+Depth Buffer Method  深度缓冲器算法
+Framebuffer  帧缓冲器    
+Scan-Line Method 扫描线算法
+Scan Plane 扫描平面  
+Active Polygon Table 活化多边形表
+Depth overlaps checking   深度重叠测试
+depth overlap深度重叠
+Projection overlaps checking 投影重叠判断
+obscure  遮挡
+Bounding rectangles 包围盒
+cyclically overlap each other 相互循环遮挡
+Penetrating Polygons 相互贯穿多边形
+transparent  透明
+translucent半透明
+facets in the scene 场景中面片
+static scene 静态场景
+BSP Tree Method   BSP树算法（半空间分割法）
+Area Subdivision Method   区域细分算法
+Chapter 7 	Solid  Modeling  实体造型
+3D geometric modeling 三维几何造型  
+Solid modeling   实体造型
+Solid   实体
+Interior points   内点    
+Boundary points   边界点
+enclosed boundary封闭边界
+glue  粘合
+partition分割
+Valid object 有效物体
+Invalid object 无效物体	
+dangling face 悬面		
+dangling edge 悬边
+unattached points and lines  孤立点和孤立边
+The closure of the interior 内点的闭包
+2 manifolds  二维流形  
+Regularized Boolean operation 正则布尔运算
+Set operation of Solids 对实体进行集合运算 
+Overlapped objects 重叠物体
+Union of two objects 两个物体的并
+Intersection of two objects 两个物体的交
+Difference of two objects 两个物体的差
+Representing Solids 实体的表示
+Primitive instancing 特征表示
+Shape properties 形状特征，如体素、孔、半孔、槽等。
+Primitive, hole, half hole, teeth   体素、孔、半孔、齿
+Material properties材料特征  如硬度、密度、热处理方法等。
+		Rigidity, density, heat treatment   硬度、密度、热处理方法
+Spatial-partitioning representations   空间分割表示  
+voxel 体素
+Spatial-occupancy enumeration 空间位置枚举表示法 
+A set of pixels   像素集合
+A set of voxels   体素集合
+Octrees   八叉树  
+Quadtree   四叉树
+Linear Octree   线性八叉树
+bintree    二叉树
+Cell decomposition 单元分解表示法 
+Sweep representations 推移表示  
+Translational sweep   平移Sweep
+Rotational sweep 旋转Sweep
+General sweep    广义Sweep 
+Boundary Representations   边界表示法  
+Geometrical information   几何信息，包括顶点、棱边、表面的大小、尺寸、位置、形状等信息
+vertex 顶点
+edge 边
+face 面
+position 位置
+shape 形状 
+Topological information   拓扑信息  
+The adjacency relationships of vertices, edges and faces  点、线、面的连接关系
+Euler’s Formula   欧拉公式
+Euler Operation   欧拉运算
+Winged-Edge Representation   翼边结构
+Half-Edge Data Structure   半边结构
+Constructive Solid Geometry   构造实体几何或称CSG树体素构造法	Operating code 操作码 
+Transformation Matrix坐标变换
+Left Child 左子树
+Right Child 右子树
+Primitive node 基本体素结点
+

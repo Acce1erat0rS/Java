@@ -1,0 +1,5 @@
+host = www.liutianyu.cn
+port = 3306
+db = JdbcDev
+user = root
+password = acce1erat0r
