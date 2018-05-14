@@ -19,7 +19,7 @@ public class Record {
     Long deltaNext;
 
     public Record(String s){
-        String pattern = "yyyy-MM-dd_hh:mm:ss";
+        String pattern = "yyyy-MM-dd_HH:mm:ss";
         String []ss = s.split(",");
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 //        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);

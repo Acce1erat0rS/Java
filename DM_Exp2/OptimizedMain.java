@@ -16,7 +16,7 @@ public class OptimizedMain {
 
 
     public static void main(String[] args) {
-        int recordNum = 500000; //设置子集的大小
+        int recordNum = 5000; //设置子集的大小
         int MaxCat = 0;          //最大食堂数目
 
         long startTime = System.currentTimeMillis();
@@ -116,8 +116,8 @@ public class OptimizedMain {
 
             int Record_iter = 0;
             Long iter = uTime;
-            while(iter<eTime){
-                System.out.println("iter/etime"+iter+"/"+eTime);
+            while(Record_iter<recordNum){
+//                System.out.println("iter/etime"+iter+"/"+eTime);
                 Record record = records.get(Record_iter++);
                 int m_stu = (int)map.get(record.stu);
                 remains[(int)map.get(record.stu)]=300;
@@ -139,10 +139,11 @@ public class OptimizedMain {
                 }
 
 //                Let Time PASS~~~~~~~~
-
                 for(int i=0;i<remains.length;i++){
-                    if(remains[i]>0)
-                        remains[i]-=delta;
+                    if(remains[i]>0){
+                        System.out.println(Record_iter);
+                        remains[i]=(int)(remains[i]-delta);
+                    }
                 }
                 iter+=delta;
 //                Record record =
