@@ -16,7 +16,7 @@ public class OptimizedMain {
 
 
     public static void main(String[] args) {
-        int recordNum = 500000; //设置子集的大小
+        int recordNum = 2000000; //设置子集的大小
         int MaxCat = 0;          //最大食堂数目
 
         long startTime = System.currentTimeMillis();
@@ -34,7 +34,7 @@ public class OptimizedMain {
             StringBuffer sb = new StringBuffer("");
 
 
-            FileReader reader = new FileReader("/Users/sp1ca/IdeaProjects/java_git/DM_Exp2/log.txt");
+            FileReader reader = new FileReader("log.txt");
             BufferedReader br = new BufferedReader(reader);
 
             String str = null;
@@ -117,7 +117,7 @@ public class OptimizedMain {
             int Record_iter = 0;
             Long iter = uTime;
             while(iter<eTime){
-                System.out.println("iter/etime"+iter+"/"+eTime);
+//                System.out.println("iter/etime"+iter+"/"+eTime);
                 Record record = records.get(Record_iter++);
                 int m_stu = (int)map.get(record.stu);
                 remains[(int)map.get(record.stu)]=300;
