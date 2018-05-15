@@ -20,10 +20,11 @@ public class OptimizedMain {
          * @param args
          */
 
-        int recordNum = 2000000;    // 设置子集的大小
-        int MaxCat = 0;             // 最大食堂数目
-        float [][]relation = null;  // 关系比例矩阵
-        double thresh = 0.5;        // 筛选好友的比例门限值
+        int recordNum = 2000000;          // 设置子集的大小
+        int MaxCat = 0;                   // 最大食堂数目
+        float [][]relation = null;        // 关系比例矩阵
+        double thresh = 0.5;              // 筛选好友的比例门限值
+        int [][]friendCounter = null;     // 好友计数器
 
 
         long startTime = System.currentTimeMillis();
@@ -89,11 +90,9 @@ public class OptimizedMain {
 
             int stuCount = stuList.size();
             Long []UTimes = new Long[stuCount];
-
             readTime = System.currentTimeMillis();
-
-
             relation = new float[stuCount][stuCount];
+            friendCounter = new int[stuCount][stuCount];
 
 
             Long uTime=0L;
@@ -115,19 +114,35 @@ public class OptimizedMain {
                 location[m_stu] = record.cat;
                 Long delta = record.deltaNext;
 
+//                for(int i=0;i<Stu_num;i++){
+//                    if(remains[i]>0){
+//                        if(location[i]==location[m_stu])
+//                        {
+//                            if(FriendCount.get(m_stu).containsKey(i)){
+//                                FriendCount.get(m_stu).replace(i,(int)FriendCount.get(i).get(i)+1);
+//                            }
+//                            else{
+//                                FriendCount.get(m_stu).put(i,1);
+//                            }
+//                        }
+//                    }
+//                }
+
                 for(int i=0;i<Stu_num;i++){
                     if(remains[i]>0){
-                        if(location[i]==location[m_stu])
+                        if(location[i] == location[m_stu])
                         {
-                            if(FriendCount.get(m_stu).containsKey(i)){
-                                FriendCount.get(m_stu).replace(i,(int)FriendCount.get(i).get(i)+1);
-                            }
-                            else{
-                                FriendCount.get(m_stu).put(i,1);
-                            }
+//                            if(FriendCount.get(m_stu).containsKey(i)){
+//                                FriendCount.get(m_stu).replace(i,(int)FriendCount.get(i).get(i)+1);
+//                            }
+//                            else{
+//                                FriendCount.get(m_stu).put(i,1);
+//                            }
+                            friendCounter[m_stu][i]++;
                         }
                     }
                 }
+
 
 //                Let Time PASS~~~~~~~~
                 for(int i=0;i<remains.length;i++){
@@ -153,14 +168,16 @@ public class OptimizedMain {
         System.out.println("-------------------------------\n");
         int Count = 0;
         for(int i=0;i<stuList.size();i++){
-            int max = (int)FriendCount.get(i).get(i);
-            Set keys = FriendCount.get(i).keySet();
-            for(Object key :keys){
-
-                int x = (int)FriendCount.get(i).get(key);
-                relation[i][(int)key] = (float)x/(float)max;
+            int max = stuList.size();
+            for(int j=0;j<friendCounter[i].length;j++){
+                relation[i][j] = (float)friendCounter[i][j]/max;
             }
         }
+
+
+
+
+
         for(Map m: FriendCount){
             System.out.print("Student "+(int)(Count++)+" : ");
             Set keys = m.keySet();
