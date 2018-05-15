@@ -10,6 +10,13 @@ import java.util.*;
  */
 public class OptimizedMain {
 
+    /**
+     * Record Counts         : 2000000 lines
+     * Read File Takes       : 7633ms
+     * Process Records Takes : 2676ms
+     * Printing Result Takes : 52ms
+     */
+
 
     public static void main(String[] args) {
 
@@ -39,11 +46,11 @@ public class OptimizedMain {
         int percent = recordNum/100;
 
         int minimal = recordNum;
+        Timer timer = new Timer();
+
         try {
             // read file content from file
             StringBuffer sb = new StringBuffer("");
-
-
             FileReader reader = new FileReader("log.txt");
             BufferedReader br = new BufferedReader(reader);
 
@@ -82,6 +89,7 @@ public class OptimizedMain {
                 }
                 records.add(rec);
             }
+            timer.doTime("Read File");
 
             Long eTime = rec.UnixTime;
 
@@ -101,9 +109,12 @@ public class OptimizedMain {
             int Stu_num = stuList.size();
             int[] remains = new int[Stu_num];
             int[] location = new int[Stu_num];
-            for(int i=0;i<Stu_num;i++){
-                FriendCount.add(new HashMap());
-            }
+//            for(int i=0;i<Stu_num;i++){
+//                FriendCount.add(new HashMap());
+//            }
+
+            timer.doTime("Initialize Var");
+
 
             int Record_iter = 0;
             Long iter = uTime;
@@ -114,30 +125,11 @@ public class OptimizedMain {
                 location[m_stu] = record.cat;
                 Long delta = record.deltaNext;
 
-//                for(int i=0;i<Stu_num;i++){
-//                    if(remains[i]>0){
-//                        if(location[i]==location[m_stu])
-//                        {
-//                            if(FriendCount.get(m_stu).containsKey(i)){
-//                                FriendCount.get(m_stu).replace(i,(int)FriendCount.get(i).get(i)+1);
-//                            }
-//                            else{
-//                                FriendCount.get(m_stu).put(i,1);
-//                            }
-//                        }
-//                    }
-//                }
 
                 for(int i=0;i<Stu_num;i++){
                     if(remains[i]>0){
                         if(location[i] == location[m_stu])
                         {
-//                            if(FriendCount.get(m_stu).containsKey(i)){
-//                                FriendCount.get(m_stu).replace(i,(int)FriendCount.get(i).get(i)+1);
-//                            }
-//                            else{
-//                                FriendCount.get(m_stu).put(i,1);
-//                            }
                             friendCounter[m_stu][i]++;
                             friendCounter[i][m_stu]++;
                         }
@@ -155,16 +147,11 @@ public class OptimizedMain {
 
             }
 
-
-
-
-
-
+            timer.doTime("Process Data");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        processTime = System.currentTimeMillis();
 
         System.out.println("-------------------------------\n");
         int Count = 0;
@@ -202,14 +189,11 @@ public class OptimizedMain {
 
         }
 
-        long printTime = System.currentTimeMillis();
+
+        timer.doTime("Output Result ");
 
 
         System.out.println("Record Counts         : "+recordNum+" lines");
-        System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
-        System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
-        System.out.println("Printing Result Takes : "+(printTime-processTime)+"ms");
-
-
+        System.out.println(timer);
     }
 }
