@@ -119,32 +119,45 @@ public class OptimizedMain {
             int Record_iter = 0;
             Long iter = uTime;
             int m_stu = 0;
+
+            //使用raw会快一些（？）
+            Set rSet = new HashSet<>();
+            Map timerMap = new HashMap<>();
+
+            int buff;
             while(Record_iter<recordNum){
                 Record record = records.get(Record_iter++);
                 m_stu = (int)map.get(record.stu);
-                remains[m_stu]=300;
+
+                if(!rSet.contains(m_stu)){
+                    rSet.add(m_stu);
+                    timerMap.put(m_stu,300);
+                }
+
                 location[m_stu] = record.cat;
                 int delta = record.deltaNext.intValue();
 
-
-                for(int i=0;i<Stu_num;i++){
-                    if(remains[i]>0){
-                        if(location[i] == location[m_stu])
-                        {
-                            friendCounter[m_stu][i]++;
-                            friendCounter[i][m_stu]++;
-                        }
+                for(Object i:rSet){
+                    if((int)i>0&&location[(int)i] == location[m_stu]){
+                        friendCounter[m_stu][(int)i]++;
+                        friendCounter[(int)i][m_stu]++;
                     }
                 }
 
                 /*
                 * 更新时间表格
                 * */
-                for(int i=0;i<remains.length;i++){
-                    if(remains[i]>0){
-                        remains[i]=remains[i]-delta;
+                for(Object i:rSet){
+
+                    buff = (int)timerMap.get(i)-delta;
+                    if(buff<0){
+                        rSet.remove(i);
+                    }
+                    else {
+                        timerMap.replace(i, buff);
                     }
                 }
+                
                 iter+=delta;
             }
 
