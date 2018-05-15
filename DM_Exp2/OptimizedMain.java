@@ -118,12 +118,13 @@ public class OptimizedMain {
 
             int Record_iter = 0;
             Long iter = uTime;
+            int m_stu = 0;
             while(Record_iter<recordNum){
                 Record record = records.get(Record_iter++);
-                int m_stu = (int)map.get(record.stu);
-                remains[(int)map.get(record.stu)]=300;
+                m_stu = (int)map.get(record.stu);
+                remains[m_stu]=300;
                 location[m_stu] = record.cat;
-                Long delta = record.deltaNext;
+                int delta = record.deltaNext.intValue();
 
 
                 for(int i=0;i<Stu_num;i++){
@@ -136,15 +137,15 @@ public class OptimizedMain {
                     }
                 }
 
-
-//                Let Time PASS~~~~~~~~
+                /*
+                * 更新时间表格
+                * */
                 for(int i=0;i<remains.length;i++){
                     if(remains[i]>0){
-                        remains[i]=(int)(remains[i]-delta);
+                        remains[i]=remains[i]-delta;
                     }
                 }
                 iter+=delta;
-
             }
 
             timer.doTime("Process Data");

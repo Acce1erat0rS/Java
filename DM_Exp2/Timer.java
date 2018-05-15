@@ -21,12 +21,12 @@ public class Timer {
     @Override
     public String toString(){
         String s="";
-        s+="--------------------------------\n";
-        s+="---        Prtformance       ---\n";
-        s+="--------------------------------\n\n";
+        s+="---------------------------------------\n";
+        s+="---           Prtformance           ---\n";
+        s+="---------------------------------------\n\n";
         for(int i=1;i<millTime.size();i++){
             long time = millTime.get(i)-millTime.get(i-1);
-            s+=records.get(i)+" time\t\t: "+ time +"\n";
+            s+=records.get(i)+" time\t\t\t: "+ time +" ms \n";
         }
 
         return s;
