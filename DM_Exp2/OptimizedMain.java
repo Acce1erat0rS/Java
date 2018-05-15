@@ -13,9 +13,19 @@ public class OptimizedMain {
 
 
     public static void main(String[] args) {
-        int recordNum = 2000000; //设置子集的大小
-        int MaxCat = 0;          //最大食堂数目
-        float [][]relation = null;
+
+        /**
+         * @Author: TianyuLiu
+         * @Description:
+         * @Date: 3:36 PM 2018/5/15
+         * @param args
+         */
+
+        int recordNum = 2000000;    // 设置子集的大小
+        int MaxCat = 0;             // 最大食堂数目
+        float [][]relation = null;  // 关系比例矩阵
+        double thresh = 0.5;        // 筛选好友的比例门限值
+
 
         long startTime = System.currentTimeMillis();
         long processTime = 0;
@@ -87,25 +97,9 @@ public class OptimizedMain {
 
             relation = new float[stuCount][stuCount];
 
-//            String pattern = "yyyy-MM-dd_hh:mm:ss";
-//            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-//            Date StartDate = sdf.parse("2017-01-01_07:00:00");
+
             Long uTime=0L;
-//            eTime=0L;
 
-//            try{
-//                uTime = sdf.parse("2017-01-01_07:00:00").getTime()/1000;
-////                eTime = sdf.parse("2017-12-31_17:59:56").getTime()/1000;
-//
-//            }
-//            catch (Exception e){
-//                e.printStackTrace();
-//            }
-
-
-//            for(Long l:UTimes){
-//                l = uTime;
-//            }
 
             int Stu_num = stuList.size();
             int[] remains = new int[Stu_num];
@@ -182,8 +176,6 @@ public class OptimizedMain {
             }
             System.out.print("\n");
         }
-        double threash = 0.5;
-
         System.out.println("-------------------------------\n");
         System.out.println("---        Friend List      ---\n");
         System.out.println("-------------------------------\n");
@@ -191,7 +183,7 @@ public class OptimizedMain {
         for(int i=0;i<stuList.size();i++){
             System.out.print("Student "+i+" : ");
             for(int j=0;j<stuList.size();j++){
-                if(relation[i][j]>threash){
+                if(relation[i][j]>thresh){
                     System.out.print(j+"\t");
                 }
             }
