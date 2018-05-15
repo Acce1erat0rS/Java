@@ -13,7 +13,7 @@ public class OptimizedMain {
 
 
     public static void main(String[] args) {
-        int recordNum = 200000; //设置子集的大小
+        int recordNum = 2000000; //设置子集的大小
         int MaxCat = 0;          //最大食堂数目
         float [][]relation = null;
 
@@ -159,13 +159,7 @@ public class OptimizedMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        processTime = System.currentTimeMillis();
-        System.out.println("Record Counts         : "+recordNum+" lines");
-        System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
-        System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
 
-
-        System.out.println("-------------------------------\n");
         int Count = 0;
         for(int i=0;i<stuList.size();i++){
             int max = (int)FriendCount.get(i).get(i);
@@ -176,6 +170,8 @@ public class OptimizedMain {
                 relation[i][(int)key] = (float)x/(float)max;
             }
         }
+        processTime = System.currentTimeMillis();
+        System.out.println("-------------------------------\n");
         for(Map m: FriendCount){
             System.out.print("Student "+(int)(Count++)+" : ");
             Set keys = m.keySet();
@@ -200,5 +196,9 @@ public class OptimizedMain {
             System.out.print("\n");
 
         }
+        System.out.println("Record Counts         : "+recordNum+" lines");
+        System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
+        System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
+
     }
 }
