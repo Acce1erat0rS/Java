@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: TianyuLiu
@@ -18,6 +15,7 @@ public class OptimizedMain {
     public static void main(String[] args) {
         int recordNum = 5000; //设置子集的大小
         int MaxCat = 0;          //最大食堂数目
+        float [][]relation = null;
 
         long startTime = System.currentTimeMillis();
         long processTime = 0;
@@ -34,7 +32,7 @@ public class OptimizedMain {
             StringBuffer sb = new StringBuffer("");
 
 
-            FileReader reader = new FileReader("/Users/sp1ca/IdeaProjects/java_git/DM_Exp2/log.txt");
+            FileReader reader = new FileReader("log.txt");
             BufferedReader br = new BufferedReader(reader);
 
             String str = null;
@@ -85,7 +83,7 @@ public class OptimizedMain {
             readTime = System.currentTimeMillis();
 
 
-            int [][]relation = new int[stuCount][stuCount];
+            relation = new float[stuCount][stuCount];
 
 //            String pattern = "yyyy-MM-dd_hh:mm:ss";
 //            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -165,5 +163,42 @@ public class OptimizedMain {
         System.out.println("Record Counts         : "+recordNum+" lines");
         System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
         System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
+
+
+        System.out.println("-------------------------------\n");
+        int Count = 0;
+        for(int i=0;i<stuList.size();i++){
+            int max = (int)FriendCount.get(i).get(i);
+            Set keys = FriendCount.get(i).keySet();
+            for(Object key :keys){
+
+                int x = (int)FriendCount.get(i).get(key);
+                relation[i][(int)key] = (float)x/(float)max;
+            }
+        }
+        for(Map m: FriendCount){
+            System.out.print("Student "+(int)(Count++)+" : ");
+            Set keys = m.keySet();
+            for(Object key :keys){
+                System.out.print("key:"+key+"\t "+"value:"+(int)(m.get(key))+"\t");
+            }
+            System.out.print("\n");
+        }
+        double threash = 0.5;
+
+        System.out.println("-------------------------------\n");
+        System.out.println("---        Friend List      ---\n");
+        System.out.println("-------------------------------\n");
+
+        for(int i=0;i<stuList.size();i++){
+            System.out.print("Student "+i+" : ");
+            for(int j=0;j<stuList.size();j++){
+                if(relation[i][j]>threash){
+                    System.out.print(j+"\t");
+                }
+            }
+            System.out.print("\n");
+
+        }
     }
 }
