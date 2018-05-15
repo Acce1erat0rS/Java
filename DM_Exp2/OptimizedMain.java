@@ -160,10 +160,6 @@ public class OptimizedMain {
             e.printStackTrace();
         }
         processTime = System.currentTimeMillis();
-        System.out.println("Record Counts         : "+recordNum+" lines");
-        System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
-        System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
-
 
         System.out.println("-------------------------------\n");
         int Count = 0;
@@ -200,5 +196,15 @@ public class OptimizedMain {
             System.out.print("\n");
 
         }
+
+        long printTime = System.currentTimeMillis();
+
+
+        System.out.println("Record Counts         : "+recordNum+" lines");
+        System.out.println("Read File Takes       : "+(readTime-startTime)+"ms");
+        System.out.println("Process Records Takes : "+(processTime-readTime)+"ms");
+        System.out.println("Printing Result Takes : "+(printTime-processTime)+"ms");
+
+
     }
 }
