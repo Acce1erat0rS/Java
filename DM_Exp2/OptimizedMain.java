@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -89,7 +88,6 @@ public class OptimizedMain {
             reader.close();
 
             int stuCount = stuList.size();
-//            Date[]date = new Date[stuCount];
             Long []UTimes = new Long[stuCount];
 
             readTime = System.currentTimeMillis();
@@ -111,7 +109,6 @@ public class OptimizedMain {
             int Record_iter = 0;
             Long iter = uTime;
             while(Record_iter<recordNum){
-//                System.out.println("iter/etime"+iter+"/"+eTime);
                 Record record = records.get(Record_iter++);
                 int m_stu = (int)map.get(record.stu);
                 remains[(int)map.get(record.stu)]=300;
@@ -135,14 +132,10 @@ public class OptimizedMain {
 //                Let Time PASS~~~~~~~~
                 for(int i=0;i<remains.length;i++){
                     if(remains[i]>0){
-//                        System.out.println(Record_iter);
                         remains[i]=(int)(remains[i]-delta);
                     }
                 }
                 iter+=delta;
-//                Record record =
-//                iter+=
-
 
             }
 
