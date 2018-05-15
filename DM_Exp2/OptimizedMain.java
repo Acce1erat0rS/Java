@@ -123,6 +123,7 @@ public class OptimizedMain {
             //使用raw会快一些（？）
             Set rSet = new HashSet<>();
             Map timerMap = new HashMap<>();
+            Set toDel = new HashSet();
 
             int buff;
             while(Record_iter<recordNum){
@@ -151,13 +152,22 @@ public class OptimizedMain {
 
                     buff = (int)timerMap.get(i)-delta;
                     if(buff<0){
-                        rSet.remove(i);
+                        toDel.add(i);
                     }
                     else {
                         timerMap.replace(i, buff);
                     }
                 }
-                
+
+                if(!toDel.isEmpty()){
+                    for(Object i:toDel){
+                        rSet.remove(i);
+                        timerMap.remove(i);
+                    }
+                }
+
+
+
                 iter+=delta;
             }
 
