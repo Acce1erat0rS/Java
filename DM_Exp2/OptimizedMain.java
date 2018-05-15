@@ -23,7 +23,7 @@ public class OptimizedMain {
         int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.5;              // 筛选好友的比例门限值
+        double thresh = 0.25;              // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
 
@@ -139,6 +139,7 @@ public class OptimizedMain {
 //                                FriendCount.get(m_stu).put(i,1);
 //                            }
                             friendCounter[m_stu][i]++;
+                            friendCounter[i][m_stu]++;
                         }
                     }
                 }
@@ -177,15 +178,15 @@ public class OptimizedMain {
 
 
 
-
-        for(Map m: FriendCount){
-            System.out.print("Student "+(int)(Count++)+" : ");
-            Set keys = m.keySet();
-            for(Object key :keys){
-                System.out.print("key:"+key+"\t "+"value:"+(int)(m.get(key))+"\t");
-            }
-            System.out.print("\n");
-        }
+//
+//        for(Map m: FriendCount){
+//            System.out.print("Student "+(int)(Count++)+" : ");
+//            Set keys = m.keySet();
+//            for(Object key :keys){
+//                System.out.print("key:"+key+"\t "+"value:"+(int)(m.get(key))+"\t");
+//            }
+//            System.out.print("\n");
+//        }
         System.out.println("-------------------------------\n");
         System.out.println("---        Friend List      ---\n");
         System.out.println("-------------------------------\n");
