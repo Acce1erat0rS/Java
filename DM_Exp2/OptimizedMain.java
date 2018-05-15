@@ -13,7 +13,7 @@ public class OptimizedMain {
 
 
     public static void main(String[] args) {
-        int recordNum = 200000; //设置子集的大小
+        int recordNum = 2000000; //设置子集的大小
         int MaxCat = 0;          //最大食堂数目
         float [][]relation = null;
 
@@ -25,6 +25,8 @@ public class OptimizedMain {
         Map map = new HashMap();
         ArrayList<ArrayList<Record>> stuList = new ArrayList<>();
         ArrayList<Record> records = new ArrayList<>();
+
+        int percent = recordNum/100;
 
         int minimal = recordNum;
         try {
@@ -62,7 +64,7 @@ public class OptimizedMain {
                     prev.deltaNext = rec.UnixTime-prev.UnixTime;
                 }
                 stuList.get(kv).add(rec);
-                if((count++)%100==0){
+                if((count++)%percent==0){
                     System.out.println(count);
                 }
                 if(rec.cat>=MaxCat){
