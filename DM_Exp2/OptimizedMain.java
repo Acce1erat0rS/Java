@@ -27,7 +27,7 @@ public class OptimizedMain {
          * @param args
          */
 
-        int recordNum = 2000000;          // 设置子集的大小
+        int recordNum = 5000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
         double thresh = 0.25;              // 筛选好友的比例门限值
