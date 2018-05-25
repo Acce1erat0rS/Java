@@ -137,7 +137,7 @@ public class OptimizedMain {
                 writeObjectToFile(stuList,"StuList");
                 writeObjectToFile(records,"Records");
             }
-
+            Thread.sleep(100000000);
             timer.doTime("Write File");
 
             Long eTime = rec.UnixTime;
