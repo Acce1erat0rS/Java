@@ -152,9 +152,21 @@ public class OptimizedMain {
             }
             System.out.println("Init Workers");
             for(int i=0;i<4;i++){
-                workers[i].run();
+                workers[i].start();
             }
+            boolean FLAG=false;
+            while (!FLAG){
+                for(int i=0;i<4;i++){
+                    if(!workers[i].FIN){
+                        Thread.sleep(50);
+                    }
+                }
+                FLAG=true;
+            }
+
             System.out.println("Combining Results");
+
+
 
             for(int k=0;k<4;k++){
                 for(int i=0;i< Stu_num;i++){

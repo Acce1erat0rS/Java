@@ -19,6 +19,7 @@ public class Worker implements Runnable{
     int Stu_num;
     int[] location;
     public int [][]friendCounter;
+    boolean FIN = false;
 
 
     Worker( String name, int start,int end,int Stu_num) {
@@ -61,6 +62,7 @@ public class Worker implements Runnable{
                 }
             }
         }
+        this.FIN = true;
     }
 
     public void start () {
