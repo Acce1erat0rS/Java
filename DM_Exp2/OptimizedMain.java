@@ -44,7 +44,7 @@ public class OptimizedMain {
          * @param args
          */
 
-        int recordNum = 200000;          // 设置子集的大小
+        int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
         double thresh = 0.001;              // 筛选好友的比例门限值
@@ -143,11 +143,24 @@ public class OptimizedMain {
             Worker w = new Worker("Only",0,recordNum,Stu_num);
             w.run();
 
-            for(int i=0;i< Stu_num;i++){
-                for(int j=0;j<Stu_num;j++){
-                    friendCounter[i][j]+=w.friendCounter[i][j];
+            Worker []workers = new Worker[4];
+            //TODO: TIME BASED
+            int Step = recordNum/4;
+            for(int i=0;i<4;i++){
+                workers[i] = new Worker("Worker "+i,i*Step,(i+1)*Step,Stu_num);
+            }
+            for(int i=0;i<4;i++){
+                workers[i].run();
+            }
+
+            for(int k=0;k<4;k++){
+                for(int i=0;i< Stu_num;i++){
+                    for(int j=0;j<Stu_num;j++){
+                        friendCounter[i][j]+=workers[k].friendCounter[i][j];
+                    }
                 }
             }
+
 
 //            while(Record_iter<recordNum){
 //                Record record = records.get(Record_iter++);
