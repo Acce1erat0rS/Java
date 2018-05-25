@@ -47,7 +47,7 @@ public class OptimizedMain {
         int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.001;              // 筛选好友的比例门限值
+        double thresh = 0.002;              // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
 
@@ -142,23 +142,24 @@ public class OptimizedMain {
 
 //            Worker w = new Worker("Only",0,recordNum,Stu_num);
 //            w.run();
-
+            int WorkerCount = 8;
             System.out.println("Creating Workers");
-            Worker []workers = new Worker[4];
+            Worker []workers = new Worker[WorkerCount];
             //TODO: TIME BASED
-            int Step = recordNum/4;
-            for(int i=0;i<4;i++){
+            int Step = recordNum/WorkerCount;
+            for(int i=0;i<WorkerCount;i++){
                 workers[i] = new Worker("Worker "+i,i*Step,(i+1)*Step,Stu_num);
             }
             System.out.println("Init Workers");
-            for(int i=0;i<4;i++){
+            for(int i=0;i<WorkerCount;i++){
                 workers[i].start();
             }
             boolean FLAG=false;
             while (!FLAG){
-                for(int i=0;i<4;i++){
+                for(int i=0;i<WorkerCount;i++){
                     if(!workers[i].FIN){
                         Thread.sleep(50);
+                        i--;
                     }
                 }
                 FLAG=true;
@@ -168,7 +169,7 @@ public class OptimizedMain {
 
 
 
-            for(int k=0;k<4;k++){
+            for(int k=0;k<WorkerCount;k++){
                 for(int i=0;i< Stu_num;i++){
                     for(int j=0;j<Stu_num;j++){
                         friendCounter[i][j]+=workers[k].friendCounter[i][j];
