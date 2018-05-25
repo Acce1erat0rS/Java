@@ -140,18 +140,21 @@ public class OptimizedMain {
             Worker.map = map;
             Worker.records = records;
 
-            Worker w = new Worker("Only",0,recordNum,Stu_num);
-            w.run();
+//            Worker w = new Worker("Only",0,recordNum,Stu_num);
+//            w.run();
 
+            System.out.println("Creating Workers");
             Worker []workers = new Worker[4];
             //TODO: TIME BASED
             int Step = recordNum/4;
             for(int i=0;i<4;i++){
                 workers[i] = new Worker("Worker "+i,i*Step,(i+1)*Step,Stu_num);
             }
+            System.out.println("Init Workers");
             for(int i=0;i<4;i++){
                 workers[i].run();
             }
+            System.out.println("Combining Results");
 
             for(int k=0;k<4;k++){
                 for(int i=0;i< Stu_num;i++){
