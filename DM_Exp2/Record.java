@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,13 +11,15 @@ import java.util.Date;
  * @Date: Created at 8:38 AM 2018/5/11
  * @Modified By:
  */
-public class Record {
+public class Record implements Serializable{
     Date time;
     Long UnixTime;
     int cat;
     int atm;
     String stu;
     Long deltaNext;
+    private static final long serialVersionUID = 1L;
+
 
     public Record(String s){
         String pattern = "yyyy-MM-dd_HH:mm:ss";
