@@ -27,10 +27,10 @@ public class OptimizedMain {
          * @param args
          */
 
-        int recordNum = 5000;          // 设置子集的大小
+        int recordNum = 200000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.25;              // 筛选好友的比例门限值
+        double thresh = 0.001;              // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
 
@@ -156,7 +156,10 @@ public class OptimizedMain {
         System.out.println("-------------------------------\n");
         int Count = 0;
         for(int i=0;i<stuList.size();i++){
-            int max = stuList.size();
+            int max = 0;
+            for(int k=0;k<friendCounter[i].length;k++){
+                max+=friendCounter[i][k];
+            }
             for(int j=0;j<friendCounter[i].length;j++){
                 relation[i][j] = (float)friendCounter[i][j]/max;
             }
