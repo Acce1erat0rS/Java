@@ -66,7 +66,7 @@ public class OptimizedMain {
         double thresh = 0.002;            // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
-        boolean serialize = true;         //序列化文件内容
+        boolean serialize = false;         //序列化文件内容
         boolean serialized = false;       //从文件中读取
 
 
@@ -100,7 +100,7 @@ public class OptimizedMain {
             int max = 0;
             int count = 0;
             Record rec = null;
-
+            if(!serialized){
             while ((str = br.readLine()) != null) {
                 if(minimal--<0)
                     break;
@@ -131,13 +131,13 @@ public class OptimizedMain {
                 }
                 records.add(rec);
             }
+            }
 
             if(serialize){
                 timer.doTime("Read File");
                 writeObjectToFile(stuList,"StuList");
                 writeObjectToFile(records,"Records");
             }
-            Thread.sleep(100000000);
             timer.doTime("Write File");
 
             Long eTime = rec.UnixTime;
