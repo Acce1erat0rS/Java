@@ -47,7 +47,7 @@ public class OptimizedMain {
         int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.001;              // 筛选好友的比例门限值
+        double thresh = 0.002;              // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
 
