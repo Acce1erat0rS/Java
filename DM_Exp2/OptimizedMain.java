@@ -1,6 +1,5 @@
 import javax.net.ssl.SNIHostName;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -12,26 +11,43 @@ import java.util.*;
 public class OptimizedMain {
 
     /**
-     * Record Counts         : 2000000 lines
-     * Read File Takes       : 7633ms
-     * Process Records Takes : 2676ms
-     * Printing Result Takes : 52ms
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     Record Counts         : 2000000 lines
      ---------------------------------------
      ---           Prtformance           ---
      ---------------------------------------
 
+     Record Counts         : 2000000 lines
+     Student Counts        : 1036
+
+     RUN 1
+     Read File Takes       : 7633ms
+     Process Records Takes : 2676ms
+     Printing Result Takes : 52ms
+
+     RUN2
      Read File time			        : 7824 ms
      Initialize Var time			: 1 ms
      Process Data time			    : 2335 ms
      Output Result  time			: 48 ms
+
+
+
+
+     Record Counts         : 2000000 lines
+     StudentCount          : 1996
+
+     Read File time			        : 7745 ms
+     Initialize Var time			: 2 ms
+     Process Data time		    	: 9647 ms
+     Output Result  time			: 42 ms
+
+     ---------------------------------------
+     ---          Threaded Ver           ---
+     ---------------------------------------
+
+     Read File time			        : 7745 ms
+     Initialize Var time			: 2 ms
+     Process Data time		    	: 2159 ms
+     Output Result  time			: 45 ms
      */
 
 
@@ -47,8 +63,11 @@ public class OptimizedMain {
         int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.001;              // 筛选好友的比例门限值
+        double thresh = 0.002;            // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
+
+        boolean serialize = true;         //序列化文件内容
+        boolean serialized = false;       //从文件中读取
 
 
         long startTime = System.currentTimeMillis();
@@ -64,6 +83,12 @@ public class OptimizedMain {
 
         int minimal = recordNum;
         Timer timer = new Timer();
+        if(serialized){
+            timer.doTime("ReadObjectFromFile");
+            stuList = (ArrayList<ArrayList<Record>>)readObjectFromFile("StuList");
+            records = (ArrayList<Record>) readObjectFromFile("Records");
+        }
+
 
         try {
             // read file content from file
@@ -107,7 +132,13 @@ public class OptimizedMain {
                 records.add(rec);
             }
 
-            timer.doTime("Read File");
+            if(serialize){
+                timer.doTime("Read File");
+                writeObjectToFile(stuList,"StuList");
+                writeObjectToFile(records,"Records");
+            }
+
+            timer.doTime("Write File");
 
             Long eTime = rec.UnixTime;
 
@@ -142,23 +173,24 @@ public class OptimizedMain {
 
 //            Worker w = new Worker("Only",0,recordNum,Stu_num);
 //            w.run();
-
+            int WorkerCount = 8;
             System.out.println("Creating Workers");
-            Worker []workers = new Worker[4];
+            Worker []workers = new Worker[WorkerCount];
             //TODO: TIME BASED
-            int Step = recordNum/4;
-            for(int i=0;i<4;i++){
+            int Step = recordNum/WorkerCount;
+            for(int i=0;i<WorkerCount;i++){
                 workers[i] = new Worker("Worker "+i,i*Step,(i+1)*Step,Stu_num);
             }
             System.out.println("Init Workers");
-            for(int i=0;i<4;i++){
+            for(int i=0;i<WorkerCount;i++){
                 workers[i].start();
             }
             boolean FLAG=false;
             while (!FLAG){
-                for(int i=0;i<4;i++){
+                for(int i=0;i<WorkerCount;i++){
                     if(!workers[i].FIN){
                         Thread.sleep(50);
+                        i--;
                     }
                 }
                 FLAG=true;
@@ -168,7 +200,7 @@ public class OptimizedMain {
 
 
 
-            for(int k=0;k<4;k++){
+            for(int k=0;k<WorkerCount;k++){
                 for(int i=0;i< Stu_num;i++){
                     for(int j=0;j<Stu_num;j++){
                         friendCounter[i][j]+=workers[k].friendCounter[i][j];
@@ -257,5 +289,44 @@ public class OptimizedMain {
 
         System.out.println("Record Counts         : "+recordNum+" lines");
         System.out.println(timer);
+    }
+
+
+
+    public static void writeObjectToFile(Object obj,String fileName)
+    {
+        File file =new File(fileName+".dat");
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(file);
+            ObjectOutputStream objOut=new ObjectOutputStream(out);
+            objOut.writeObject(obj);
+            objOut.flush();
+            objOut.close();
+            System.out.println("write object success!");
+        } catch (IOException e) {
+            System.out.println("write object failed");
+            e.printStackTrace();
+        }
+    }
+
+    public static Object readObjectFromFile(String fileName)
+    {
+        Object temp=null;
+        File file =new File(fileName+".dat");
+        FileInputStream in;
+        try {
+            in = new FileInputStream(file);
+            ObjectInputStream objIn=new ObjectInputStream(in);
+            temp=objIn.readObject();
+            objIn.close();
+            System.out.println("read object success!");
+        } catch (IOException e) {
+            System.out.println("read object failed");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 }
