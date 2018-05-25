@@ -5,8 +5,8 @@
  * @Modified By:
  */
 public class Operation {
-    Tree[] trees;
-    int TotalMainVal=0;
+    Tree []trees;
+    float TotalMainVal=0;
     int featureCount;
     double MainValThreash = 0.3;
     double SparsityThreash = 0.8;
@@ -55,10 +55,10 @@ public class Operation {
             if(s==null||s.equals("")){
                 break;
             }
-            s = s.replace("（","");
-            s = s.replace("）","");
+//            s = s.replace("（","");
+//            s = s.replace("）","");
             try{
-                Record r = new Record(s,"，",trees);
+                Record r = new Record(s,", ",trees);
                 TotalMainVal+=r.MainValue;
                 int count = 0;
                 for(int i:r.fid){

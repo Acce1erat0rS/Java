@@ -1,3 +1,4 @@
+import javax.net.ssl.SNIHostName;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
@@ -15,6 +16,22 @@ public class OptimizedMain {
      * Read File Takes       : 7633ms
      * Process Records Takes : 2676ms
      * Printing Result Takes : 52ms
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     Record Counts         : 2000000 lines
+     ---------------------------------------
+     ---           Prtformance           ---
+     ---------------------------------------
+
+     Read File time			        : 7824 ms
+     Initialize Var time			: 1 ms
+     Process Data time			    : 2335 ms
+     Output Result  time			: 48 ms
      */
 
 
@@ -89,6 +106,7 @@ public class OptimizedMain {
                 }
                 records.add(rec);
             }
+
             timer.doTime("Read File");
 
             Long eTime = rec.UnixTime;
@@ -118,34 +136,47 @@ public class OptimizedMain {
 
             int Record_iter = 0;
             Long iter = uTime;
-            while(Record_iter<recordNum){
-                Record record = records.get(Record_iter++);
-                int m_stu = (int)map.get(record.stu);
-                remains[(int)map.get(record.stu)]=300;
-                location[m_stu] = record.cat;
-                Long delta = record.deltaNext;
 
+            Worker.map = map;
+            Worker.records = records;
 
-                for(int i=0;i<Stu_num;i++){
-                    if(remains[i]>0){
-                        if(location[i] == location[m_stu])
-                        {
-                            friendCounter[m_stu][i]++;
-                            friendCounter[i][m_stu]++;
-                        }
-                    }
+            Worker w = new Worker("Only",0,recordNum,Stu_num);
+            w.run();
+
+            for(int i=0;i< Stu_num;i++){
+                for(int j=0;j<Stu_num;j++){
+                    friendCounter[i][j]+=w.friendCounter[i][j];
                 }
-
-                /*
-                * 更新时间表格
-                * */
-                for(int i=0;i<remains.length;i++){
-                    if(remains[i]>0){
-                        remains[i]=(int)(remains[i]-delta);
-                    }
-                }
-                iter+=delta;
             }
+
+//            while(Record_iter<recordNum){
+//                Record record = records.get(Record_iter++);
+//                int m_stu = (int)map.get(record.stu);
+//                remains[(int)map.get(record.stu)]=300;
+//                location[m_stu] = record.cat;
+//                Long delta = record.deltaNext;
+//
+//
+//                for(int i=0;i<Stu_num;i++){
+//                    if(remains[i]>0){
+//                        if(location[i] == location[m_stu])
+//                        {
+//                            friendCounter[m_stu][i]++;
+//                            friendCounter[i][m_stu]++;
+//                        }
+//                    }
+//                }
+//
+//                /*
+//                * 更新时间表格
+//                * */
+//                for(int i=0;i<remains.length;i++){
+//                    if(remains[i]>0){
+//                        remains[i]=(int)(remains[i]-delta);
+//                    }
+//                }
+//                iter+=delta;
+//            }
 
             timer.doTime("Process Data");
 

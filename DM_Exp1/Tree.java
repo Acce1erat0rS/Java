@@ -18,7 +18,7 @@ public class Tree {
         int number;
         int father;
         String name;
-        int CombinedValue;
+        float CombinedValue;
         boolean nulled;
 
         private Node(String s,String delimiter)throws Exception{
@@ -146,11 +146,10 @@ public class Tree {
             System.out.println("ERRRRRRRRRRRRRR");
             return -1;
         }
-
         return node.get(childId).father;
     }
 
-    public void addValue(int nodeID,int MainVal){
+    public void addValue(int nodeID,float MainVal){
         int cur = nodeID;
         while(cur != -1){
             //TODO:是不是应该验证一下树结构的编号是不是正常的编号
@@ -205,7 +204,7 @@ public class Tree {
         iter = 0;
     }
 
-    public void prene(int TotalMainVal, double threshold){
+    public void prene(float TotalMainVal, double threshold){
 
         /**
          * @Author: TianyuLiu
