@@ -39,9 +39,6 @@ public class Record implements Serializable{
 
         cat = Integer.parseInt(ss[2]);
         cat = Integer.parseInt(ss[3]);
-
-
-
     }
 
     public static void main(String [] args){

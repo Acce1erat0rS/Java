@@ -44,6 +44,7 @@ public class OptimizedMain {
      ---          Threaded Ver           ---
      ---------------------------------------
 
+     8 Thread on i7-5930X with a standard SATA SSD.
      Read File time			        : 7745 ms
      Initialize Var time			: 2 ms
      Process Data time		    	: 2159 ms
