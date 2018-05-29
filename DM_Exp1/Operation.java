@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+
 /**
  * @Author: TianyuLiu
  * @Description:
@@ -10,7 +13,12 @@ public class Operation {
     int featureCount;
     double MainValThreash = 0.3;
     double SparsityThreash = 0.8;
-    RecordFeeder rf;
+    int timeCount = 1;
+    static Timer t = new Timer();
+    static boolean FIN = false;
+//    public RecordFeeder rf;
+
+    public FileRecordFeeder rf;
 
     public Operation(String[] treeStrings){
         /**
@@ -48,17 +56,21 @@ public class Operation {
         //TODO: 这里只是在demo的时候使用，在真正的应用中，正则匹配的速度非常慢，无论是trim还是replace都不应该使用
 
         TotalMainVal=0;
-        RecordFeeder rf = new RecordFeeder();
+//        FileRecordFeeder
+        rf = new FileRecordFeeder("/Users/sp1ca/IdeaProjects/java_git/DM_Exp1/purchasingLog.txt");
         String s;
-        while(true){
+        rf.setTrees(trees);
+        Record r = null;
+        while((r = rf.getNextVector())!=null){
             s = rf.getNext();
-            if(s==null||s.equals("")){
-                break;
-            }
+//            Record r = rf.getNextVector();
+//            if(s==null||s.equals("")){
+//                break;
+//            }
 //            s = s.replace("（","");
 //            s = s.replace("）","");
             try{
-                Record r = new Record(s,", ",trees);
+//                Record r = new Record(s,", ",trees);
                 TotalMainVal+=r.MainValue;
                 int count = 0;
                 for(int i:r.fid){
@@ -68,11 +80,31 @@ public class Operation {
             }catch (Exception e){
                 System.out.println("记录读取失败\nERRMSG:\n"+e.getMessage());
             }
+
         }
+        rf.ResetViter();
         System.out.println("特征树构建成功");
     }
 
-    public boolean check(int[] vector){
+
+    public int[] unPrune(int[] vector){
+        /**
+         * @Author: TianyuLiu
+         * @Description: This function will convert a Pruned tree node vector back
+         * to it's original form.
+         * @Date: 1:21 PM 2018/5/29
+         * @param vector
+         */
+        int[] ret =  new int[vector.length];
+
+        for(int i=0;i<vector.length;i++){
+            ret[i] = trees[i].unPrene(vector[i]);
+        }
+
+        return ret;
+    }
+
+    public Result check(int[] vector){
 
         /**
          * @Author: TianyuLiu
@@ -85,29 +117,47 @@ public class Operation {
         Record a = null;
         double sum = 0;
         int count = 0;
+        float TotalMV = 0;
+
+        int[] n_vector = unPrune(vector);
         while(true){
             a = rf.getNextVector();
             if(a==null)
                 break;
-            double dist = getDistance(vector,a.fid);
+            if(a.nulled){
+                continue;
+            }
+            double dist = getDistance(n_vector,a.fid);
             if(dist>0) {
                 sum += dist;
+                TotalMV+=a.MainValue;
                 count++;
             }
         }
         sum/=count;
 
-        if(sum<SparsityThreash){
+        if((sum<SparsityThreash)&&(TotalMV/TotalMainVal>0.3)){
             String s= "";
 
             for(int i=0;i<featureCount;i++){
-                s += trees[i].getName(vector[i])+", ";
+                s += trees[i].getName(n_vector[i])+", ";
             }
 
-            System.out.println(s);
-            return true;
+
+            Result r = new Result();
+            r.Sparsity = sum;
+            r.MainValue = TotalMV;
+            r.resNodes = new int[n_vector.length];
+            r.resStrings = new String[n_vector.length];
+            for(int i=0;i<n_vector.length;i++){
+                r.resNodes[i] = n_vector[i];
+                r.resStrings[i] = trees[i].getName(n_vector[i]);
+            }
+            return r;
+
+
         }
-        return false;
+        return null;
     }
 
     public void doCluster(){
@@ -119,12 +169,14 @@ public class Operation {
          * @param
          */
 
+        ArrayList<Result> are = new ArrayList<>();
+
 
         for(Tree t:trees){
             t.prene(TotalMainVal,MainValThreash);
         }
 
-        System.out.println("基于MainVal剪枝完成");
+        System.out.println("第"+ timeCount++ +"次基于MainVal剪枝完成");
 
         int vector[] = new int[trees.length];
         for(int i=0;i<trees.length;i++){
@@ -141,6 +193,9 @@ public class Operation {
         int[] NLength = new int[trees.length];
         for(int i=0;i<trees.length;i++){
             NLength[i] = trees[i].GetNulledLength();
+
+
+//            NLength[i] = trees[i].node.size();
             searchSpace*=NLength[i];
         }
 
@@ -150,11 +205,50 @@ public class Operation {
                 vector[j] = temp%NLength[j];
                 temp/=NLength[j];
             }
-
-            if(check(vector)){
-                System.out.println("Success in one blah blah blah");
+            Result r;
+            if((r = check(vector))!=null){
+                are.add(r);
             }
         }
+
+        Result fin = null;
+        double min = 200D;
+
+        for(Result r:are){
+            if(r.Sparsity<min){
+                min = r.Sparsity;
+                fin = r;
+            }
+        }
+
+        System.out.println(fin);
+        if(fin==null){
+            FIN = true;
+        }
+        else
+            purgeRecords(fin);
+    }
+
+    public void purgeRecords(Result r){
+        /**
+         * @Author: TianyuLiu
+         * @Description: This method is used to purge the Record Set with a
+         * Successfully Clustered CLuster
+         * @Date: 9:29 AM 2018/5/29
+         * @param r
+         */
+
+        // TODO: 封装不好，耦合略大 应该放在rf里面做？
+        if(r==null){
+            return;
+        }
+
+        for(Record record:rf.vectors){
+            if(getDistance(r.resNodes,record.fid)!=-1){
+                record.nulled = true;
+                }
+        }
+
     }
 
     public double getDistance(int[] vector1, int[] vector2){
@@ -218,6 +312,8 @@ public class Operation {
 
         Operation op = new Operation(treeStrings);
 
+        t.doTime("Initializing Operation");
+
         /**
          * --------------------------------------
          *              第一次入记录
@@ -226,12 +322,35 @@ public class Operation {
 
         op.InflateTree();
 
-        op.rf = new RecordFeeder();
-        op.rf.setTrees(op.trees);
+        t.doTime("Inflate Tree");
 
 
-        op.doCluster();
+//        op.rf = new FileRecordFeeder("/Users/sp1ca/IdeaProjects/java_git/DM_Exp1/purchasingLog.txt");
+//        op.rf.setTrees(op.trees);
+
+        int C = 1;
+        while(!FIN){
+            op.doCluster();
+            t.doTime("第"+C+++"次聚类");
+        }
+        System.out.println(t);
 
 
+    }
+}
+
+class cmp implements Comparator<Result>{
+    @Override
+    public boolean equals(Object obj) {
+        return false;
+    }
+
+    @Override
+    public int compare(Result o1, Result o2) {
+
+        if(o1.Sparsity > o2.Sparsity){
+            return 1;
+        }
+        else return 0;
     }
 }

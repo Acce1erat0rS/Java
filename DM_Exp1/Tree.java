@@ -45,6 +45,30 @@ public class Tree {
         }
     }
 
+    public int unPrene(int pn){
+//        if(pn==0)
+//            return 0;
+//        int c = 0;
+//        for(int i=0;i<pn;i++){
+//            while(node.get(c).nulled){
+//                c++;
+//            }
+//            c++;
+//        }
+//        c--;
+//        return c;
+//        pn++;
+        for(int i=0;i<node.size();i++){
+            if(!node.get(i).nulled){
+                if(pn==0)
+                    return i;
+                else
+                    pn--;
+            }
+        }
+        return -1;
+    }
+
     public Tree(String s,String TreeDelimiter,String NodeDelimiter) throws Exception{
         /**
          * @Author: TianyuLiu
@@ -143,7 +167,8 @@ public class Tree {
          * @param childId
          */
         if (childId < 0) {
-            System.out.println("ERRRRRRRRRRRRRR");
+            //TODO: This is not right
+//            System.out.println("ERRRRRRRRRRRRRR");
             return -1;
         }
         return node.get(childId).father;
@@ -254,6 +279,7 @@ public class Tree {
     public String getName(int index) {
         return node.get(index).name;
     }
+
     public static void main(String []args){
 
     }

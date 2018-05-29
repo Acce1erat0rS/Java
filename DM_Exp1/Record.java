@@ -1,4 +1,6 @@
 import com.sun.org.apache.regexp.internal.RE;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.security.interfaces.RSAKey;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class Record {
     int []fid;
     float MainValue;
+    boolean nulled = false;
 
     public Record(String RecordString,String delimiter,Tree []trees)throws Exception{
 
@@ -37,8 +40,8 @@ public class Record {
 //        }
 
         LocalDateTime dt = LocalDateTime.parse(fields[0],
-                DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
-        //2015-01-01T06:03:54
+                DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm[:ss]"));
+        //2015-06-24_11:48
         int dof = dt.getDayOfWeek().getValue();
         int hourOfDay = dt.getHour();
         int age = Integer.parseInt(fields[1]);
@@ -61,20 +64,20 @@ public class Record {
 
     public String dofParse(int dof){
         switch (dof){
-            case (2):
-                return"周一";
-            case (3):
-                return"周二";
-            case (4):
-                return"周三";
-            case (5):
-                return"周四";
-            case (6):
-                return"周五";
-            case (7):
-                return"周六";
             case (1):
-                return"周天";
+                return"周一";
+            case (2):
+                return"周二";
+            case (3):
+                return"周三";
+            case (4):
+                return"周四";
+            case (5):
+                return"周五";
+            case (6):
+                return"周六";
+            case (7):
+                return"周日";
         }
         return null;
     }
@@ -92,6 +95,8 @@ public class Record {
         return "晚休闲";
     }
 
+    @NotNull
+    @Contract(pure = true)
     private String ageParse(int age){
         if(age<=69)
             return "活力老人";
