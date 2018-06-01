@@ -75,7 +75,7 @@ public class OptimizedMain {
         long processTime = 0;
         long readTime = 0;
 
-        long stuTimes[2000];
+        long[] stuTimes = new long[2000];
         for(long l: stuTimes){
             l=0;
         }
@@ -123,7 +123,7 @@ public class OptimizedMain {
 
                 // 写入下一个什么时候进来
                 int kv = (int)map.get(no);
-                startTime[kv]++;
+                stuTimes[kv]++;
                 Record prev = rec;
                 rec = new Record(str);
                 if(prev!=null){
@@ -257,9 +257,12 @@ public class OptimizedMain {
             int max = 0;
             for(int k=0;k<friendCounter[i].length;k++){
                 max+=friendCounter[i][k];
+                if((i!=k)&&(friendCounter[i][k]>80))
+System.out.println(friendCounter[i][k]);
             }
             for(int j=0;j<friendCounter[i].length;j++){
-                relation[i][j] = (float)friendCounter[i][j]/startTime[j];
+                relation[i][j] = (float)friendCounter[i][j]/stuTimes[j];
+System.out.println(stuTimes[j]);
             }
         }
 
