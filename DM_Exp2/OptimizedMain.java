@@ -64,7 +64,7 @@ public class OptimizedMain {
         int recordNum = 2000000;          // 设置子集的大小
         int MaxCat = 0;                   // 最大食堂数目
         float [][]relation = null;        // 关系比例矩阵
-        double thresh = 0.002;            // 筛选好友的比例门限值
+        double thresh = 0.25;            // 筛选好友的比例门限值
         int [][]friendCounter = null;     // 好友计数器
 
         boolean serialize = false;         //序列化文件内容
@@ -251,6 +251,9 @@ public class OptimizedMain {
             int max = 0;
             for(int k=0;k<friendCounter[i].length;k++){
                 max+=friendCounter[i][k];
+                if(i==1){
+			System.out.println(friendCounter[i][k]);
+                }
             }
             for(int j=0;j<friendCounter[i].length;j++){
                 relation[i][j] = (float)friendCounter[i][j]/max;
