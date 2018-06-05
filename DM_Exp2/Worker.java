@@ -15,12 +15,11 @@ public class Worker implements Runnable{
     private int end;
     static ArrayList<Record> records;
     static Map map;
-    int[] remains;
-    int Stu_num;
-    int[] location;
+    private int[] remains;
+    private int Stu_num;
+    private int[] location;
     public int [][]friendCounter;
     boolean FIN = false;
-
 
     Worker( String name, int start,int end,int Stu_num) {
         threadName = name;

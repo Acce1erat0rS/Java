@@ -99,7 +99,7 @@ public class OptimizedMain {
         try {
             // read file content from file
             StringBuffer sb = new StringBuffer("");
-            FileReader reader = new FileReader("log.txt");
+            FileReader reader = new FileReader("/Users/sp1ca/IdeaProjects/java_git/DM_Exp2/log.txt");
             BufferedReader br = new BufferedReader(reader);
 
             String str = null;
@@ -178,15 +178,17 @@ public class OptimizedMain {
             Worker.map = map;
             Worker.records = records;
 
-//            Worker w = new Worker("Only",0,recordNum,Stu_num);
-//            w.run();
+
             int WorkerCount = 8;
             System.out.println("Creating Workers");
             Worker []workers = new Worker[WorkerCount];
             //TODO: TIME BASED
             int Step = recordNum/WorkerCount;
             for(int i=0;i<WorkerCount;i++){
-                workers[i] = new Worker("Worker "+i,i*Step,(i+1)*Step,Stu_num);
+                workers[i] = new Worker(
+                        "Worker "+i,
+                        i*Step,
+                        (i+1)*Step,Stu_num);
             }
             System.out.println("Init Workers");
             for(int i=0;i<WorkerCount;i++){
@@ -257,12 +259,11 @@ public class OptimizedMain {
             int max = 0;
             for(int k=0;k<friendCounter[i].length;k++){
                 max+=friendCounter[i][k];
-                if((i!=k)&&(friendCounter[i][k]>80))
-System.out.println(friendCounter[i][k]);
+//                if((i!=k)&&(friendCounter[i][k]>80))
+////                    System.out.println(friendCounter[i][k]);
             }
             for(int j=0;j<friendCounter[i].length;j++){
                 relation[i][j] = (float)friendCounter[i][j]/stuTimes[j];
-System.out.println(stuTimes[j]);
             }
         }
 
