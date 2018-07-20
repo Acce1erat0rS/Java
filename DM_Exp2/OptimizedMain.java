@@ -99,7 +99,7 @@ public class OptimizedMain {
         try {
             // read file content from file
             StringBuffer sb = new StringBuffer("");
-            FileReader reader = new FileReader("/Users/sp1ca/IdeaProjects/java_git/DM_Exp2/log.txt");
+            FileReader reader = new FileReader("log.txt");
             BufferedReader br = new BufferedReader(reader);
 
             String str = null;
@@ -283,15 +283,19 @@ public class OptimizedMain {
         System.out.println("---        Friend List      ---\n");
         System.out.println("-------------------------------\n");
 
+        String s = "";
+        int count =  0;
         for(int i=0;i<stuList.size();i++){
-            System.out.print("Student "+i+" : ");
             for(int j=0;j<stuList.size();j++){
                 if(relation[i][j]>thresh){
-                    System.out.print(j+"\t");
+                    if(i!=j){
+                    s+=j;
+                    s+='\t';
+                    count++;}
                 }
             }
-            System.out.print("\n");
-
+            System.out.print("Student "+i+" ("+count+"):"+s+"\n");
+            s="";count=0;
         }
 
 

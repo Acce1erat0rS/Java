@@ -44,7 +44,7 @@ public class Worker implements Runnable{
 
             for(int i=0;i<Stu_num;i++){
                 if(remains[i]>0){
-                    if(location[i] == location[m_stu])
+            //        if(location[i] == location[m_stu])
                     {
                         friendCounter[m_stu][i]++;
                         friendCounter[i][m_stu]++;
